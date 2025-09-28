@@ -1,7 +1,3 @@
-
-
-
-
 import React, { useState, type FC } from 'react';
 import type { Trainer } from '../types';
 import { XIcon, CreditCardIcon, LockClosedIcon, BitIcon } from './IconComponents';
@@ -71,7 +67,7 @@ const PaymentModal: FC<PaymentModalProps> = ({ trainer, bookingDetails, onClose,
     return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (paymentMethod === 'card') {
       if (!validateForm()) {
@@ -90,6 +86,10 @@ const PaymentModal: FC<PaymentModalProps> = ({ trainer, bookingDetails, onClose,
   const formattedDate = new Date(bookingDetails.date).toLocaleDateString(locale, {
     weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC',
   });
+  
+  const qrData = encodeURIComponent(`FASTA Payment to ${trainer.name} for ₪${trainer.hourlyRate}`);
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${qrData}&bgcolor=0f172a&color=e2e8f0&qzone=1`;
+
 
   return (
     <div
@@ -144,7 +144,7 @@ const PaymentModal: FC<PaymentModalProps> = ({ trainer, bookingDetails, onClose,
           </div>
 
           {paymentMethod === 'card' ? (
-            <form onSubmit={handleSubmit} className="mt-6 space-y-4 animate-fade-in-down">
+            <form className="mt-6 space-y-4 animate-fade-in-down">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">{t('paymentModal_card_nameLabel')}</label>
                   <input type="text" id="name" name="name" value={cardDetails.name} onChange={handleInputChange} className={`w-full bg-slate-700 border rounded-md py-2.5 px-4 text-white placeholder-slate-400 focus:ring-2 focus:border-emerald-500 transition ${errors.name ? 'border-red-500 ring-red-500/50' : 'border-slate-600 focus:ring-emerald-500'}`} placeholder={t('paymentModal_card_namePlaceholder')} />
@@ -177,12 +177,14 @@ const PaymentModal: FC<PaymentModalProps> = ({ trainer, bookingDetails, onClose,
                 </p>
             </form>
           ) : (
-             <div className="mt-6 text-center py-8 px-4 animate-fade-in-down">
-                <div className="flex justify-center mb-4">
-                    <BitIcon className="w-16 h-16" />
-                </div>
+             <div className="mt-6 text-center py-4 px-4 animate-fade-in-down">
                 <h3 className="text-lg font-semibold text-white">{t('paymentModal_bit_title')}</h3>
-                <p className="text-slate-400 mt-2 text-sm">{t('paymentModal_bit_subtitle', { amount: trainer.hourlyRate })}</p>
+                <p className="text-slate-400 mt-2 text-sm">{t('paymentModal_bit_subtitle')}</p>
+                 <div className="flex justify-center my-4">
+                     <div className="bg-slate-900 p-2 rounded-lg border border-slate-700">
+                       <img src={qrCodeUrl} alt="QR Code for Bit payment" className="w-40 h-40" />
+                     </div>
+                </div>
                 <p className="text-xs text-slate-500 flex items-center justify-center gap-2 mt-6">
                     <LockClosedIcon className="w-4 h-4" /> {t('paymentModal_bit_secure')}
                 </p>

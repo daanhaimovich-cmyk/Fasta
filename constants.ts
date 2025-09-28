@@ -1,6 +1,6 @@
 import { Trainer, Specialty, UserProfile, Conversation } from './types';
 
-export const ISRAELI_CITIES: string[] = [
+export const CITIES: string[] = [
   'Tel Aviv',
   'Jerusalem',
   'Haifa',
@@ -9,8 +9,8 @@ export const ISRAELI_CITIES: string[] = [
   'Ashdod',
   'Netanya',
   'Beersheba',
-  'Bnei Brak',
   'Holon',
+  'Bnei Brak',
   'Ramat Gan',
   'Rehovot',
   'Ashkelon',

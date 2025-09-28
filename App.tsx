@@ -14,7 +14,6 @@ import Dashboard from './components/Dashboard';
 import MedalUnlockedModal from './components/MedalUnlockedModal';
 import MessagingCenter from './components/MessagingCenter';
 import About from './components/About';
-import VanessaAgent from './components/VanessaAgent';
 import { MOCK_TRAINERS, MOCK_CONVERSATIONS, MOCK_USERS } from './constants';
 import { ALL_MEDALS } from './medals';
 import type { Trainer, Review, UserProfile, Booking, Medal, Conversation, Message, Participant } from './types';
@@ -47,11 +46,12 @@ const App: FC = () => {
     // This is a one-time mock data setup for demonstration
     if (!localStorage.getItem('fasta_conversations_initialized')) {
       localStorage.setItem('fasta_conversations', JSON.stringify(MOCK_CONVERSATIONS));
+      
       // Mock users for login demo
-      Object.values(MOCK_USERS).forEach(u => {
-        // FIX: Explicitly cast 'u' to UserProfile to resolve spread and property access errors.
-        const userForStorage = { ...(u as UserProfile), password: 'password123' };
-        localStorage.setItem(`fasta_user_${(u as UserProfile).email}`, JSON.stringify(userForStorage));
+      const mockUsersArray: UserProfile[] = Object.values(MOCK_USERS);
+      mockUsersArray.forEach(u => {
+        const userForStorage = { ...u, password: 'password123' };
+        localStorage.setItem(`fasta_user_${u.email}`, JSON.stringify(userForStorage));
       });
       localStorage.setItem('fasta_conversations_initialized', 'true');
     }
@@ -102,6 +102,35 @@ const App: FC = () => {
       localStorage.setItem('fasta_conversations', JSON.stringify(conversations));
     }
   }, [conversations]);
+
+  // This effect ensures any change to the user's profile is saved to their permanent record.
+  useEffect(() => {
+    if (user) {
+        // Persist changes to the main user account record (which includes the password)
+        const userAccountKey = `fasta_user_${user.email}`;
+        try {
+            const storedAccountRaw = localStorage.getItem(userAccountKey);
+            // Start with the existing account data (like password) or an empty object
+            const storedAccount = storedAccountRaw ? JSON.parse(storedAccountRaw) : {};
+
+            const updatedAccount = {
+                ...storedAccount,
+                ...user, // Overwrite with the latest state from the app
+            };
+
+            localStorage.setItem(userAccountKey, JSON.stringify(updatedAccount));
+
+            // Also, update the "logged-in session" record, which doesn't store the password
+            if (localStorage.getItem('fasta_user')) {
+                localStorage.setItem('fasta_user', JSON.stringify(user));
+            } else if (sessionStorage.getItem('fasta_user')) {
+                sessionStorage.setItem('fasta_user', JSON.stringify(user));
+            }
+        } catch (e) {
+            console.error("Failed to persist user data:", e);
+        }
+    }
+  }, [user]);
 
   const userConversations = useMemo(() => {
     if (!user) return [];
@@ -277,7 +306,6 @@ const App: FC = () => {
         }
         
         setUser(updatedUser);
-        localStorage.setItem('fasta_user', JSON.stringify(updatedUser));
         
         // Add system message to conversation
         const locale = 'en-US';
@@ -439,7 +467,6 @@ const App: FC = () => {
       {newlyUnlockedMedal && (
           <MedalUnlockedModal medal={newlyUnlockedMedal} onClose={() => setNewlyUnlockedMedal(null)} />
       )}
-      <VanessaAgent />
     </div>
   );
 };

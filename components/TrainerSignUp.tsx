@@ -1,6 +1,7 @@
 
+
 import React, { useState, useRef, type FC } from 'react';
-import { ISRAELI_CITIES } from '../constants';
+import { CITIES } from '../constants';
 import { Specialty } from '../types';
 import { EyeIcon, EyeOffIcon, UserCircleIcon, CameraIcon, LinkIcon, CheckCircleIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
@@ -227,7 +228,7 @@ const TrainerSignUp: FC = () => {
                                 <label htmlFor="city" className="block text-sm font-medium text-slate-300 mb-2">{t('signup_cityLabel')}</label>
                                 <select id="city" name="city" value={formData.city} onChange={handleInputChange} required className="w-full bg-slate-700 border border-slate-600 rounded-md py-2.5 px-4 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
                                     <option value="">{t('signup_citySelect')}</option>
-                                    {ISRAELI_CITIES.sort().map(city => <option key={city} value={city}>{city}</option>)}
+                                    {CITIES.sort().map(city => <option key={city} value={city}>{city}</option>)}
                                 </select>
                             </div>
                              <div>
@@ -252,7 +253,7 @@ const TrainerSignUp: FC = () => {
                             <label className="block text-sm font-medium text-slate-300 mb-2">{t('trainerSignup_locationsLabel')}</label>
                             <div className="mt-2 grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-3">
                                 {trainingLocationsOptions.map(location => (
-                                    <label key={location.value} className="flex items-center space-x-3 rtl:space-x-reverse bg-slate-700/50 p-3 rounded-md hover:bg-slate-700 transition cursor-pointer">
+                                    <label key={location.value} className="flex items-center space-x-3 bg-slate-700/50 p-3 rounded-md hover:bg-slate-700 transition cursor-pointer">
                                         <input type="checkbox" value={location.value} checked={formData.trainingLocations.includes(location.value)} onChange={handleCheckboxChange} className="h-4 w-4 rounded bg-slate-700 border-slate-600 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-800"/>
                                         <span className="text-slate-300 font-medium">{location.key}</span>
                                     </label>
