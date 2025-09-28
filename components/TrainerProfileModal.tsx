@@ -1,6 +1,8 @@
 
 
-import React, { useState } from 'react';
+
+
+import React, { useState, type FC } from 'react';
 import type { Trainer, UserProfile, Review } from '../types';
 import { XIcon, StarIcon, ChatBubbleIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
@@ -12,7 +14,7 @@ interface TrainerProfileModalProps {
   onReviewSubmit: (trainerId: number, reviewData: { rating: number; comment: string }) => void;
 }
 
-const TrainerProfileModal: React.FC<TrainerProfileModalProps> = ({ trainer, onClose, currentUser, onReviewSubmit }) => {
+const TrainerProfileModal: FC<TrainerProfileModalProps> = ({ trainer, onClose, currentUser, onReviewSubmit }) => {
   const { t } = useTranslation();
   const [newRating, setNewRating] = useState(0);
   const [newComment, setNewComment] = useState('');
@@ -50,7 +52,7 @@ const TrainerProfileModal: React.FC<TrainerProfileModalProps> = ({ trainer, onCl
             <img src={trainer.photoUrl} alt={trainer.name} className="w-24 h-24 rounded-full object-cover border-4 border-emerald-500" />
             <div>
               <h2 id="profile-modal-title" className="text-3xl font-bold text-white">{trainer.name}</h2>
-              <div className="flex items-center text-slate-400 mt-1 space-x-4 rtl:space-x-reverse text-sm">
+              <div className="flex items-center text-slate-400 mt-1 space-x-4 text-sm">
                 <span>{trainer.location}</span>
                 {trainer.isOnline && <span className="text-emerald-400 font-semibold">{t('trainerCard_online')}</span>}
               </div>
@@ -93,7 +95,7 @@ const TrainerProfileModal: React.FC<TrainerProfileModalProps> = ({ trainer, onCl
                 <h4 className="font-semibold text-white mb-3">{t('profileModal_leaveReview')}</h4>
                 <div className="flex items-center mb-3">
                   <span className="text-slate-300 me-3">{t('profileModal_yourRating')}</span>
-                  <div className="flex space-x-1 rtl:space-x-reverse">
+                  <div className="flex space-x-1">
                     {[1, 2, 3, 4, 5].map(star => (
                       <button
                         key={star}

@@ -1,4 +1,5 @@
 
+
 import React, { useState, useRef, type FC } from 'react';
 import { ISRAELI_CITIES } from '../constants';
 import { EyeIcon, EyeOffIcon, UserCircleIcon, CameraIcon } from './IconComponents';
@@ -280,7 +281,7 @@ const SignUp: FC<SignUpProps> = ({ onSignUpSuccess, onNavigateToLogin }) => {
                             <label className="block text-sm font-medium text-slate-300 mb-2">{t('signup_locationsLabel')}</label>
                             <div className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-3">
                                 {trainingLocationsOptions.map(location => (
-                                    <label key={location.value} className="flex items-center space-x-3 rtl:space-x-reverse bg-slate-700/50 p-3 rounded-md hover:bg-slate-700 transition cursor-pointer">
+                                    <label key={location.value} className="flex items-center space-x-3 bg-slate-700/50 p-3 rounded-md hover:bg-slate-700 transition cursor-pointer">
                                         <input type="checkbox" value={location.value} checked={formData.trainingLocations.includes(location.value)} onChange={handleCheckboxChange} className="h-4 w-4 rounded bg-slate-700 border-slate-600 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-800"/>
                                         <span className="text-slate-300 font-medium">{location.key}</span>
                                     </label>

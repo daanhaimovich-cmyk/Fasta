@@ -1,4 +1,5 @@
 
+
 import React, { type FC } from 'react';
 import type { Trainer } from '../types';
 import { StarIcon, LocationMarkerIcon } from './IconComponents';
@@ -38,7 +39,7 @@ const TrainerCard: FC<TrainerCardProps> = ({ trainer, onMessageTrainer, onViewPr
             </div>
         </div>
         
-        <div className="flex items-center text-slate-400 mt-1 space-x-4 rtl:space-x-reverse text-sm">
+        <div className="flex items-center text-slate-400 mt-1 space-x-4 text-sm">
            <div className="flex items-center">
              <LocationMarkerIcon className="me-1" />
              <span>{trainer.location}</span>

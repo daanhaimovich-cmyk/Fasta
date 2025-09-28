@@ -1,6 +1,7 @@
 
 
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, type FC } from 'react';
 import { Specialty } from '../types';
 import type { Trainer, Filters } from '../types';
 import FilterSidebar from './FilterSidebar';
@@ -17,7 +18,7 @@ interface TrainerDiscoveryProps {
 
 type ViewMode = 'grid' | 'map';
 
-const TrainerDiscovery: React.FC<TrainerDiscoveryProps> = ({ 
+const TrainerDiscovery: FC<TrainerDiscoveryProps> = ({ 
     trainers, 
     onMessageTrainer, 
     onViewProfile,

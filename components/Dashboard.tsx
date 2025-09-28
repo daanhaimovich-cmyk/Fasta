@@ -1,12 +1,13 @@
 
 
-import React from 'react';
+
+import React, { type FC } from 'react';
 import type { UserProfile } from '../types';
 import { ALL_MEDALS } from '../medals';
 import { LockClosedIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
 
-const Dashboard: React.FC<{ user: UserProfile | null }> = ({ user }) => {
+const Dashboard: FC<{ user: UserProfile | null }> = ({ user }) => {
   const { t } = useTranslation();
 
   if (!user) {

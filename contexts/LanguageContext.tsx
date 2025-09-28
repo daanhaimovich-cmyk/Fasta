@@ -1,9 +1,7 @@
-import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useCallback, type FC } from 'react';
 
 // Define the shape of the context
 interface LanguageContextType {
-  language: 'en' | 'he';
-  setLanguage: (language: 'en' | 'he') => void;
   t: (key: string, replacements?: { [key: string]: string | number }) => string;
 }
 
@@ -204,230 +202,24 @@ const enStrings: { [key: string]: string } = {
   "about_trainers_text": "We're also committed to empowering fitness professionals. FASTA is more than just a discovery platform; it's a comprehensive toolkit for trainers. We help you streamline your business by managing your finances, organizing your schedule, and amplifying your brand through effective advertisement. Focus on what you do best—coaching—and let us handle the rest."
 };
 
-const heStrings: { [key: string]: string } = {
-    "header_browseTrainers": "חיפוש מאמנים",
-    "header_forTrainers": "למאמנים",
-    "header_about": "אודות",
-    "header_dashboard": "לוח בקרה",
-    "header_messages": "הודעות",
-    "header_welcome": "ברוך הבא, ",
-    "header_logout": "התנתק",
-    "header_login": "התחבר",
-    "header_signup": "הירשם",
-  
-    "discovery_trainersFound_zero": "לא נמצאו מאמנים",
-    "discovery_trainersFound_one": "נמצא מאמן 1",
-    "discovery_trainersFound_other": "נמצאו {count} מאמנים",
-    "discovery_filters": "סינון",
-    "discovery_gridView": "תצוגת רשת",
-    "discovery_mapView": "תצוגת מפה",
-  
-    "filters_specialty": "התמחות",
-    "filters_rating": "דירוג",
-    "filters_maxHourlyRate": "מחיר מקסימלי לשעה",
-    "filters_location": "מיקום",
-    "filters_locationPlaceholder": "לדוגמה: תל אביב",
-    "filters_onlineOnly": "אימון אונליין בלבד",
-  
-    "specialty_Yoga": "יוגה",
-    "specialty_Weightlifting": "הרמת משקולות",
-    "specialty_Cardio": "אירובי",
-    "specialty_Pilates": "פילאטיס",
-    "specialty_CrossFit": "קרוספיט",
-    "specialty_Boxing": "איגרוף",
-    "specialty_Nutrition": "תזונה",
-    "specialty_Running": "ריצה",
-  
-    "trainerCard_perHour": "/ שעה",
-    "trainerCard_viewProfile": "צפה בפרופיל",
-    "trainerCard_messageTrainer": "שלח הודעה",
-    "trainerCard_online": "אונליין",
-  
-    "login_welcomeBack": "ברוכים השבים",
-    "login_subtitle": "התחבר כדי להמשיך במסע הכושר שלך.",
-    "login_emailLabel": "כתובת אימייל",
-    "login_emailPlaceholder": "you@example.com",
-    "login_passwordLabel": "סיסמה",
-    "login_passwordPlaceholder": "••••••••",
-    "login_rememberMe": "זכור אותי",
-    "login_error": "אימייל או סיסמה שגויים. נסה שוב.",
-    "login_button": "התחבר",
-    "login_noAccount": "אין לך חשבון?",
-    "login_signUpLink": "הירשם",
-  
-    "signup_createAccountTitle": "צור את החשבון שלך",
-    "signup_step1_subtitle": "בוא נתחיל עם הבסיס.",
-    "signup_usernameLabel": "שם משתמש",
-    "signup_usernamePlaceholder": "your_username",
-    "signup_passwordHelper": "הסיסמה חייבת להכיל לפחות 6 תווים.",
-    "signup_continue": "המשך",
-    "signup_haveAccount": "כבר יש לך חשבון?",
-    "signup_loginLink": "התחבר",
-    "signup_emailError": "נא להזין כתובת אימייל תקינה.",
-    "signup_passwordError": "הסיסמה חייבת להכיל לפחות 6 תווים.",
-    "signup_usernameError_length": "שם המשתמש חייב להכיל לפחות 3 תווים.",
-    "signup_usernameError_format": "שם המשתמש יכול להכיל רק אותיות, מספרים וקווים תחתונים.",
-    "signup_step2_title": "הוסף תמונת פרופיל",
-    "signup_step2_subtitle": "זה עוזר למאמנים להכיר אותך.",
-    "signup_back": "חזור",
-    "signup_skipContinue": "דלג והמשך",
-    "signup_step3_title": "ספר לנו על עצמך",
-    "signup_step3_subtitle": "זה עוזר לנו למצוא את המאמנים הטובים ביותר עבורך.",
-    "signup_fullNameLabel": "שם מלא",
-    "signup_fullNamePlaceholder": "לדוגמה: אלכס ג'ונסון",
-    "signup_ageLabel": "גיל",
-    "signup_agePlaceholder": "הגיל שלך",
-    "signup_sexLabel": "מין",
-    "signup_sexSelect": "בחר...",
-    "signup_sexMale": "זכר",
-    "signup_sexFemale": "נקבה",
-    "signup_sexOther": "אחר",
-    "signup_sexPreferNotToSay": "מעדיף לא לציין",
-    "signup_goalsLabel": "מטרות כושר",
-    "signup_goalsPlaceholder": "לדוגמה: לרדת 10 ק\"ג, לבנות שריר, לרוץ 5 ק\"מ...",
-    "signup_cityLabel": "עיר בישראל",
-    "signup_citySelect": "בחר עיר...",
-    "signup_locationsLabel": "מיקומי אימון מועדפים",
-    "signup_locationAtHome": "בבית",
-    "signup_locationGym": "חדר כושר",
-    "signup_locationPark": "פארק",
-    "signup_locationOnline": "אונליין",
-    "signup_medicalLabel": "היסטוריה רפואית (אופציונלי)",
-    "signup_medicalSublabel": "אנא ציין כל מצב רפואי או פציעה שעלינו לדעת. מידע זה חסוי.",
-    "signup_medicalPlaceholder": "לדוגמה: פציעת ברך בעבר, אסתמה...",
-    "signup_submitButton": "צור חשבון",
-    "signup_progress_step1": "חשבון",
-    "signup_progress_step2": "תמונה",
-    "signup_progress_step3": "פרופיל",
-
-    "trainerSignup_title": "צור חשבון מאמן",
-    "trainerSignup_subtitle": "הצטרף לפלטפורמה שלנו והתחבר ללקוחות.",
-    "trainerSignup_step2_title": "הוסף את תמונת הפרופיל שלך",
-    "trainerSignup_step2_subtitle": "תמונה מקצועית עוזרת לך למשוך לקוחות.",
-    "trainerSignup_step3_title": "בנה את פרופיל המאמן שלך",
-    "trainerSignup_step3_subtitle": "הצג את המומחיות והכישורים שלך.",
-    "trainerSignup_experienceLabel": "שנות ניסיון",
-    "trainerSignup_experiencePlaceholder": "לדוגמה: 5",
-    "trainerSignup_specialtiesLabel": "התמחויות (עד 3)",
-    "trainerSignup_locationsLabel": "היכן אתה מאמן?",
-    "trainerSignup_locationClientsHome": "בית הלקוח",
-    "trainerSignup_bioLabel": "ביוגרפיה",
-    "trainerSignup_bioPlaceholder": "ספר ללקוחות על פילוסופיית האימון שלך, מה מייחד אותך, ולמה הם יכולים לצפות מהאימונים שלך.",
-    "trainerSignup_certificationsLabel": "הסמכות",
-    "trainerSignup_certificationsPlaceholder": "לדוגמה: מאמן אישי מוסמך NASM, קרוספיט רמה 2, וכו'.",
-    "trainerSignup_agendaLabel": "קישור ליומן (אופציונלי)",
-    "trainerSignup_agendaPlaceholder": "https://calendly.com/your-name",
-    "trainerSignup_submitButton": "צור פרופיל",
-    "trainerSignup_successTitle": "ברוך הבא, {name}!",
-    "trainerSignup_successSubtitle": "פרופיל המאמן שלך נוצר.",
-    "trainerSignup_successInfo": "אנו נרגשים לצרף אותך לפלטפורמת FASTA.",
-    "trainerSignup_successButton": "צור פרופיל נוסף",
-
-    "bookingModal_title": "הזמן אימון עם",
-    "bookingModal_selectDate": "בחר תאריך",
-    "bookingModal_selectTime": "בחר שעה",
-    "bookingModal_messageLabel": "הודעה (אופציונלי)",
-    "bookingModal_messagePlaceholder": "בקשות מיוחדות או מטרות לאימון זה?",
-    "bookingModal_submitButton": "המשך לתשלום של ₪{rate}",
-    "day_sun": "א'", "day_mon": "ב'", "day_tue": "ג'", "day_wed": "ד'", "day_thu": "ה'", "day_fri": "ו'", "day_sat": "ש'",
-
-    "paymentModal_title": "אישור תשלום",
-    "paymentModal_subtitle": "עבור האימון שלך עם {name}",
-    "paymentModal_details_dateTime": "תאריך ושעה:",
-    "paymentModal_details_total": "סה\"כ:",
-    "paymentModal_tab_card": "כרטיס אשראי",
-    "paymentModal_tab_bit": "שלם עם Bit",
-    "paymentModal_card_nameLabel": "שם בעל הכרטיס",
-    "paymentModal_card_namePlaceholder": "שם מלא",
-    "paymentModal_card_numberLabel": "מספר כרטיס",
-    "paymentModal_card_numberPlaceholder": "0000 0000 0000 0000",
-    "paymentModal_card_expiryLabel": "תאריך תפוגה",
-    "paymentModal_card_expiryPlaceholder": "MM / YY",
-    "paymentModal_card_cvcLabel": "CVC",
-    "paymentModal_card_cvcPlaceholder": "123",
-    "paymentModal_card_secure": "תשלום מאובטח באמצעות Stripe",
-    "paymentModal_card_error_name": "נדרש שם",
-    "paymentModal_card_error_number": "מספר כרטיס לא תקין",
-    "paymentModal_card_error_expiry": "תאריך תפוגה לא תקין",
-    "paymentModal_card_error_cvc": "CVC לא תקין",
-    "paymentModal_bit_title": "השלם תשלום עם Bit",
-    "paymentModal_bit_subtitle": "תועבר לאפליקציית Bit לאישור התשלום של ₪{amount}.",
-    "paymentModal_bit_secure": "תשלום מאובטח ומהימן",
-    "paymentModal_submitButton_processing": "מעבד...",
-    "paymentModal_submitButton_card": "שלם ₪{rate}",
-    "paymentModal_submitButton_bit": "אשר תשלום ב-Bit",
-
-    "confirmationModal_title": "ההזמנה אושרה!",
-    "confirmationModal_subtitle": "האימון שלך עם {name} נקבע.",
-    "confirmationModal_details_date": "תאריך",
-    "confirmationModal_details_time": "שעה",
-    "confirmationModal_button_chat": "צפה בצ'אט",
-    "confirmationModal_button_done": "סיום",
-
-    "profileModal_about": "אודות {name}",
-    "profileModal_reviews": "ביקורות",
-    "profileModal_reviewsCount": "({count} ביקורות)",
-    "profileModal_leaveReview": "השאר ביקורת",
-    "profileModal_yourRating": "הדירוג שלך:",
-    "profileModal_commentPlaceholder": "שתף את החוויה שלך...",
-    "profileModal_submitReview": "שלח ביקורת",
-    "profileModal_noReviews": "היה הראשון להשאיר ביקורת ל{name}!",
-
-    "dashboard_welcome": "ברוך הבא, {name}!",
-    "dashboard_progressTitle": "ההתקדמות שלך",
-    "dashboard_sessionsCompleted": "סך הכל אימונים שהושלמו",
-    "dashboard_medalsTitle": "המדליות שלך",
-    "dashboard_unlockMedal": "השלם {milestone} אימונים כדי לפתוח.",
-
-    "medalModal_title": "מדליה נפתחה!",
-    "medalModal_button": "מגניב!",
-    
-    "messages_title": "הודעות",
-    "messages_noMessages": "אין עדיין הודעות",
-    "messages_you": "אתה: ",
-    "messages_bookSession": "הזמן אימון",
-    "messages_placeholder": "הקלד הודעה...",
-    "messages_selectConversation": "בחר שיחה כדי להתחיל לשוחח.",
-    "messages_system_bookingConfirmed": "האימון אושר ליום {date} בשעה {time}.",
-
-    "about_title": "המשימה שלנו ב-FASTA",
-    "about_subtitle": "מחברים אותך לפוטנציאל הכושר שלך, ללא מגבלות מיקום.",
-    "about_mission_title": "המשימה שלנו",
-    "about_mission_text": "המשימה המרכזית שלנו ב-FASTA היא לחולל מהפכה בתחום הכושר. אנו מאמינים שלכל אחד מגיע גישה למאמן אישי שמבין באמת את מטרותיו הייחודיות, ללא קשר למחסומים גיאוגרפיים. אנחנו כאן כדי לשבור את מגבלות ה'מה קרוב' ולחבר אותך למומחיות שאתה צריך כדי להצליח.",
-    "about_clients_title": "ללקוחות",
-    "about_clients_text": "מציאת המאמן הנכון היא הצעד המכריע ביותר בכל מסע כושר. FASTA מאפשרת לך לגלות אנשי מקצוע על בסיס התמחותם, סגנון האימון שלהם, והמטרות הספציפיות שלך - לא רק המיקוד שלהם. בין אם אתה רוצה לבנות שריר, לשלוט ביוגה, או לרוץ מרתון, ההתאמה המושלמת שלך נמצאת כאן. השג את מטרות הכושר שלך, FASTA.",
-    "about_trainers_title": "למאמנים",
-    "about_trainers_text": "אנו מחויבים גם להעצים אנשי מקצוע בתחום הכושר. FASTA היא יותר מסתם פלטפורמת גילוי; היא ערכת כלים מקיפה למאמנים. אנו עוזרים לך לייעל את העסק שלך על ידי ניהול הכספים, ארגון לוח הזמנים שלך, והגברת המותג שלך באמצעות פרסום יעיל. התמקד במה שאתה עושה הכי טוב - אימון - ותן לנו לטפל בכל השאר."
-};
-
-
-const translations = { en: enStrings, he: heStrings };
 
 // Create the context with a default value
 export const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 // Create a provider component
-export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<'en' | 'he'>('en');
-
-  useEffect(() => {
-    // Update the dir attribute on the html element
-    document.documentElement.lang = language;
-    document.documentElement.dir = language === 'he' ? 'rtl' : 'ltr';
-  }, [language]);
-
+export const LanguageProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
   const t = useCallback((key: string, replacements?: { [key: string]: string | number }): string => {
-    let translation = translations[language][key] || key;
+    let translation = enStrings[key] || key;
     if (replacements) {
         Object.keys(replacements).forEach(placeholder => {
             translation = translation.replace(`{${placeholder}}`, String(replacements[placeholder]));
         });
     }
     return translation;
-  }, [language]);
+  }, []);
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ t }}>
       {children}
     </LanguageContext.Provider>
   );

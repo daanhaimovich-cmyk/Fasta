@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useMemo, useCallback, type FC } from 'react';
 import Header from './components/Header';
 import SignUp from './components/SignUp';
@@ -40,7 +41,7 @@ const App: FC = () => {
   // Messaging State
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
-  const { t, language } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // This is a one-time mock data setup for demonstration
@@ -279,7 +280,7 @@ const App: FC = () => {
         localStorage.setItem('fasta_user', JSON.stringify(updatedUser));
         
         // Add system message to conversation
-        const locale = language === 'he' ? 'he-IL' : 'en-US';
+        const locale = 'en-US';
         const formattedDate = new Date(booking.date).toLocaleDateString(locale, {
             weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC',
         });

@@ -1,6 +1,8 @@
 
 
-import React, { useState } from 'react';
+
+
+import React, { useState, type FC } from 'react';
 import type { Trainer } from '../types';
 import { XIcon, CreditCardIcon, LockClosedIcon, BitIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
@@ -12,8 +14,8 @@ interface PaymentModalProps {
   onPaymentSuccess: () => void;
 }
 
-const PaymentModal: React.FC<PaymentModalProps> = ({ trainer, bookingDetails, onClose, onPaymentSuccess }) => {
-  const { t, language } = useTranslation();
+const PaymentModal: FC<PaymentModalProps> = ({ trainer, bookingDetails, onClose, onPaymentSuccess }) => {
+  const { t } = useTranslation();
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'bit'>('card');
   const [cardDetails, setCardDetails] = useState({
     name: '',
@@ -84,7 +86,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ trainer, bookingDetails, on
     }, 1500);
   };
 
-  const locale = language === 'he' ? 'he-IL' : 'en-US';
+  const locale = 'en-US';
   const formattedDate = new Date(bookingDetails.date).toLocaleDateString(locale, {
     weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC',
   });

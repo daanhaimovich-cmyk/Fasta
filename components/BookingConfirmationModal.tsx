@@ -1,6 +1,8 @@
 
 
-import React from 'react';
+
+
+import React, { type FC } from 'react';
 import type { Trainer, Booking } from '../types';
 import { XIcon, CheckCircleIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
@@ -12,9 +14,9 @@ interface BookingConfirmationModalProps {
   onMessageTrainer: () => void;
 }
 
-const BookingConfirmationModal: React.FC<BookingConfirmationModalProps> = ({ trainer, booking, onClose, onMessageTrainer }) => {
-  const { t, language } = useTranslation();
-  const locale = language === 'he' ? 'he-IL' : 'en-US';
+const BookingConfirmationModal: FC<BookingConfirmationModalProps> = ({ trainer, booking, onClose, onMessageTrainer }) => {
+  const { t } = useTranslation();
+  const locale = 'en-US';
 
   const formattedDate = new Date(booking.date).toLocaleDateString(locale, {
     weekday: 'long',

@@ -1,10 +1,11 @@
 
 
-import React from 'react';
+
+import React, { type FC } from 'react';
 import { TargetIcon, UsersIcon, BriefcaseIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
 
-const FeatureCard: React.FC<{
+const FeatureCard: FC<{
   icon: React.ReactNode;
   title: string;
   children: React.ReactNode;
@@ -20,7 +21,7 @@ const FeatureCard: React.FC<{
   );
 };
 
-const About: React.FC = () => {
+const About: FC = () => {
   const { t } = useTranslation();
   return (
     <div className="max-w-4xl mx-auto animate-fade-in-down">

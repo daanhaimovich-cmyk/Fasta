@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, type FC } from 'react';
 import { GoogleGenAI, Chat } from '@google/genai';
 import { SparklesIcon, XIcon, SendIcon } from './IconComponents';
 import type { ChatMessage } from '../types';
@@ -19,7 +19,7 @@ Your Persona:
 - If a user asks a general fitness question, provide safe, general advice and recommend they consult a professional trainer on the platform for personalized plans.
 - Do not mention that you are a language model. You are Vanessa, the FASTA guide.`;
 
-const VanessaAgent: React.FC = () => {
+const VanessaAgent: FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<ChatMessage[]>([
         {

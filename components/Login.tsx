@@ -1,6 +1,6 @@
 
 
-import React, { useState } from 'react';
+import React, { useState, type FC } from 'react';
 import { EyeIcon, EyeOffIcon } from './IconComponents';
 import type { UserProfile } from '../types';
 import { useTranslation } from '../contexts/LanguageContext';
@@ -10,7 +10,7 @@ interface LoginProps {
     onNavigateToSignUp: () => void;
 }
 
-const Login: React.FC<LoginProps> = ({ onLoginSuccess, onNavigateToSignUp }) => {
+const Login: FC<LoginProps> = ({ onLoginSuccess, onNavigateToSignUp }) => {
     const { t } = useTranslation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

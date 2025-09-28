@@ -1,4 +1,5 @@
 
+
 import React, { useState, type FC } from 'react';
 import type { Filters, Specialty } from '../types';
 import { StarIcon, ChevronUpIcon, ChevronDownIcon, LocationMarkerIcon } from './IconComponents';
@@ -50,7 +51,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ filters, setFilters, availableS
       <FilterSection title={t('filters_specialty')}>
         <div className="space-y-2">
           {availableSpecialties.map(spec => (
-            <label key={spec} className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer">
+            <label key={spec} className="flex items-center space-x-3 cursor-pointer">
               <input
                 type="checkbox"
                 checked={filters.specialties.includes(spec)}
@@ -64,7 +65,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ filters, setFilters, availableS
       </FilterSection>
 
       <FilterSection title={t('filters_rating')}>
-         <div className="flex space-x-1 rtl:space-x-reverse">
+         <div className="flex space-x-1">
           {[1, 2, 3, 4, 5].map(star => (
             <button key={star} onClick={() => handleRatingChange(star)} className="focus:outline-none">
               <StarIcon filled={star <= filters.minRating} className="w-6 h-6"/>

@@ -1,4 +1,5 @@
 
+
 import React, { type FC } from 'react';
 import type { UserProfile } from '../types';
 import { View } from '../App';
@@ -13,7 +14,7 @@ interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = ({ onNavigate, user, onLogout, unreadMessagesCount }) => {
-  const { language, setLanguage, t } = useTranslation();
+  const { t } = useTranslation();
 
   const handleMessagesClick = () => {
     if (user) {
@@ -21,10 +22,6 @@ const Header: FC<HeaderProps> = ({ onNavigate, user, onLogout, unreadMessagesCou
     } else {
       onNavigate('client-signup');
     }
-  };
-
-  const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'he' : 'en');
   };
   
   return (
@@ -41,13 +38,6 @@ const Header: FC<HeaderProps> = ({ onNavigate, user, onLogout, unreadMessagesCou
           <button onClick={() => onNavigate('about')} className="text-sm font-medium text-slate-300 hover:text-white transition-colors">{t('header_about')}</button>
         </nav>
         <div className="flex items-center space-x-4">
-            <button
-                onClick={toggleLanguage}
-                className="px-3 py-1.5 text-sm font-semibold bg-slate-700 text-white rounded-md hover:bg-slate-600 transition-colors"
-                aria-label={`Switch to ${language === 'en' ? 'Hebrew' : 'English'}`}
-            >
-              {language === 'en' ? 'עב' : 'EN'}
-            </button>
             {user ? (
                 <>
                     <button onClick={() => onNavigate('dashboard')} className="text-slate-400 hover:text-white transition-colors" aria-label={t('header_dashboard')}>

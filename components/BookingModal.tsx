@@ -1,4 +1,5 @@
 
+
 import React, { useState, useMemo, type FC } from 'react';
 import type { Trainer } from '../types';
 import { XIcon } from './IconComponents';
@@ -18,7 +19,7 @@ const BookingModal: FC<BookingModalProps> = ({ trainer, onClose, onConfirm }) =>
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [message, setMessage] = useState('');
-  const { t, language } = useTranslation();
+  const { t } = useTranslation();
 
   const today = new Date();
   const firstDayOfMonth = useMemo(() => new Date(today.getFullYear(), today.getMonth(), 1), [today.getFullYear(), today.getMonth()]);
@@ -26,7 +27,6 @@ const BookingModal: FC<BookingModalProps> = ({ trainer, onClose, onConfirm }) =>
 
   const calendarDays = useMemo(() => {
     let startingDayOfWeek = firstDayOfMonth.getDay();
-    // In Hebrew calendar, week starts on Sunday (0) which is correct for getDay()
     const days = [];
     // Add padding for days before the 1st of the month
     for (let i = 0; i < startingDayOfWeek; i++) {
@@ -37,7 +37,7 @@ const BookingModal: FC<BookingModalProps> = ({ trainer, onClose, onConfirm }) =>
       days.push(new Date(today.getFullYear(), today.getMonth(), i));
     }
     return days;
-  }, [firstDayOfMonth, daysInMonth, today, language]);
+  }, [firstDayOfMonth, daysInMonth, today]);
 
   const handleDateSelect = (day: Date) => {
     // Prevent selecting past dates

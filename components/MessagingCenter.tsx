@@ -1,6 +1,8 @@
 
 
-import React, { useState, useEffect, useRef } from 'react';
+
+
+import React, { useState, useEffect, useRef, type FC } from 'react';
 import type { Conversation, UserProfile, Trainer } from '../types';
 import { SendIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
@@ -15,7 +17,7 @@ interface MessagingCenterProps {
     onInitiateBooking: (trainer: Trainer) => void;
 }
 
-const MessagingCenter: React.FC<MessagingCenterProps> = ({ 
+const MessagingCenter: FC<MessagingCenterProps> = ({ 
     conversations, 
     currentUser, 
     onSendMessage,
@@ -24,7 +26,7 @@ const MessagingCenter: React.FC<MessagingCenterProps> = ({
     trainers,
     onInitiateBooking,
 }) => {
-    const { t, language } = useTranslation();
+    const { t } = useTranslation();
     const [newMessage, setNewMessage] = useState('');
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -59,7 +61,7 @@ const MessagingCenter: React.FC<MessagingCenterProps> = ({
     
     const formatTimestamp = (timestamp: string) => {
         const date = new Date(timestamp);
-        const locale = language === 'he' ? 'he-IL' : 'en-US';
+        const locale = 'en-US';
         return date.toLocaleTimeString(locale, { hour: 'numeric', minute: '2-digit', hour12: true });
     };
     
@@ -137,7 +139,7 @@ const MessagingCenter: React.FC<MessagingCenterProps> = ({
                                      {msg.senderId !== currentUser.email && (
                                         <img src={otherParticipant?.photoUrl} alt="" className="w-8 h-8 rounded-full object-cover self-start" />
                                     )}
-                                    <div className={`max-w-xs md:max-w-md lg:max-w-lg p-3 rounded-2xl ${msg.senderId === currentUser.email ? 'bg-emerald-600 text-white rounded-br-lg rtl:rounded-bl-lg rtl:rounded-br-none' : 'bg-slate-700 text-slate-200 rounded-bl-lg rtl:rounded-br-lg rtl:rounded-bl-none'}`}>
+                                    <div className={`max-w-xs md:max-w-md lg:max-w-lg p-3 rounded-2xl ${msg.senderId === currentUser.email ? 'bg-emerald-600 text-white rounded-br-lg' : 'bg-slate-700 text-slate-200 rounded-bl-lg'}`}>
                                         <p className="text-sm">{msg.content}</p>
                                         <p className={`text-xs mt-1 ${msg.senderId === currentUser.email ? 'text-emerald-200/80 text-end' : 'text-slate-400 text-start'}`}>{formatTimestamp(msg.timestamp)}</p>
                                     </div>

@@ -1,6 +1,7 @@
 
 
-import React from 'react';
+
+import React, { type FC } from 'react';
 import type { Medal } from '../types';
 import { useTranslation } from '../contexts/LanguageContext';
 
@@ -9,7 +10,7 @@ interface MedalUnlockedModalProps {
   onClose: () => void;
 }
 
-const MedalUnlockedModal: React.FC<MedalUnlockedModalProps> = ({ medal, onClose }) => {
+const MedalUnlockedModal: FC<MedalUnlockedModalProps> = ({ medal, onClose }) => {
   const { t } = useTranslation();
   
   return (
