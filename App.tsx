@@ -1,5 +1,7 @@
 
 
+
+
 import React, { useState, useEffect, useMemo, useCallback, type FC } from 'react';
 import Header from './components/Header';
 import SignUp from './components/SignUp';
@@ -14,13 +16,14 @@ import Dashboard from './components/Dashboard';
 import MedalUnlockedModal from './components/MedalUnlockedModal';
 import MessagingCenter from './components/MessagingCenter';
 import About from './components/About';
+import RoleSelection from './components/RoleSelection';
 import { MOCK_TRAINERS, MOCK_CONVERSATIONS, MOCK_USERS } from './constants';
 import { ALL_MEDALS } from './medals';
 import type { Trainer, Review, UserProfile, Booking, Medal, Conversation, Message, Participant } from './types';
 import { useTranslation } from './contexts/LanguageContext';
 
 
-export type View = 'discovery' | 'client-signup' | 'trainer-signup' | 'login' | 'dashboard' | 'messages' | 'about';
+export type View = 'discovery' | 'signup-role-select' | 'client-signup' | 'trainer-signup' | 'login' | 'dashboard' | 'messages' | 'about';
 
 interface PendingBooking {
     trainer: Trainer;
@@ -216,18 +219,46 @@ const App: FC = () => {
      handleLoginSuccess(userData, true); // Default to remembering new sign-ups
   };
 
-  const handleTrainerSignUp = (newTrainerData: Omit<Trainer, 'id' | 'reviews' | 'isOnline' | 'coordinates'>) => {
+  const handleTrainerSignUp = (trainerData: any) => {
+      // 1. Create the public Trainer profile object
       const newTrainer: Trainer = {
-          ...newTrainerData,
-          id: trainers.length + 1, // Simple ID generation for mock data
+          id: trainers.length + 1,
+          name: trainerData.fullName,
+          email: trainerData.email,
+          photoUrl: trainerData.photoUrl,
+          specialties: trainerData.specialties,
+          hourlyRate: parseInt(trainerData.hourlyRate, 10),
+          location: trainerData.city,
+          isOnline: trainerData.trainingLocations.includes('Online'),
+          bio: trainerData.bio,
           reviews: [],
-          // FIX: The type for newTrainerData omits the `isOnline` property, so it cannot be accessed here.
-          isOnline: newTrainerData.location === 'Online',
-          // For demo, let's assign a random nearby coordinate if a known city is chosen
-          coordinates: MOCK_TRAINERS.find(t => t.location === newTrainerData.location)?.coordinates || { lat: 32.0853, lng: 34.7818 }
+          coordinates: MOCK_TRAINERS.find(t => t.location === trainerData.city)?.coordinates || { lat: 32.0853, lng: 34.7818 }
       };
       setTrainers(prev => [...prev, newTrainer]);
+      
+      // 2. Create the UserProfile object for login
+      const newTrainerUserProfile: UserProfile = {
+        email: trainerData.email,
+        fullName: trainerData.fullName,
+        username: trainerData.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, ''),
+        photoUrl: trainerData.photoUrl,
+        completedSessions: 0,
+        earnedMedalIds: [],
+        conversations: [],
+        favoriteTrainerIds: [],
+      };
+      
+      // 3. Store the full user account with password
+      const userForStorage = {
+        ...newTrainerUserProfile,
+        password: trainerData.password,
+      };
+      localStorage.setItem(`fasta_user_${trainerData.email}`, JSON.stringify(userForStorage));
+      
+      // 4. Log the new trainer in and navigate to discovery
+      handleLoginSuccess(newTrainerUserProfile, true, true);
   };
+
 
   const handleInitiateBooking = (trainer: Trainer) => {
       setTrainerToBook(trainer);
@@ -239,7 +270,7 @@ const App: FC = () => {
   
   const handleCreateOrSelectConversation = (trainer: Trainer) => {
       if (!user) {
-        setView('client-signup');
+        setView('signup-role-select');
         return;
       };
       
@@ -413,12 +444,14 @@ const App: FC = () => {
 
   const renderView = () => {
     switch(view) {
+        case 'signup-role-select':
+             return <RoleSelection onSelectRole={(role) => setView(role === 'client' ? 'client-signup' : 'trainer-signup')} />;
         case 'client-signup':
             return <SignUp onSignUpSuccess={handleSignUpSuccess} onNavigateToLogin={() => setView('login')} />;
         case 'trainer-signup':
-            return <TrainerSignUp onSignUpSuccess={handleTrainerSignUp} onNavigate={handleNavigate} />;
+            return <TrainerSignUp onSignUpSuccess={handleTrainerSignUp} />;
         case 'login':
-            return <Login onLoginSuccess={handleLoginSuccess} onNavigateToSignUp={() => setView('client-signup')} />;
+            return <Login onLoginSuccess={handleLoginSuccess} onNavigateToSignUp={() => setView('signup-role-select')} />;
         case 'dashboard':
             return <Dashboard user={user} />;
         case 'messages':
@@ -430,7 +463,7 @@ const App: FC = () => {
                                 selectedConversationId={selectedConversationId}
                                 trainers={trainers}
                                 onInitiateBooking={handleInitiateBooking}
-                           /> : <Login onLoginSuccess={handleLoginSuccess} onNavigateToSignUp={() => setView('client-signup')} />;
+                           /> : <Login onLoginSuccess={handleLoginSuccess} onNavigateToSignUp={() => setView('signup-role-select')} />;
         case 'about':
             return <About />;
         case 'discovery':
@@ -447,7 +480,7 @@ const App: FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-900 font-sans">
-      <Header onNavigate={handleNavigate} user={user} onLogout={handleLogout} unreadMessagesCount={unreadMessagesCount} />
+      <Header onNavigate={handleNavigate} user={user} onLogout={handleLogout} unreadMessagesCount={unreadMessagesCount} view={view} />
       <main className="container mx-auto px-4 py-8 md:py-12">
         {renderView()}
       </main>

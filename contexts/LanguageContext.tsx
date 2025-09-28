@@ -56,6 +56,13 @@ const enStrings: { [key: string]: string } = {
   "login_noAccount": "Don't have an account?",
   "login_signUpLink": "Sign Up",
 
+  "roleSelection_title": "Join FASTA",
+  "roleSelection_subtitle": "Choose your path. Are you here to achieve your fitness goals or to guide others on theirs?",
+  "roleSelection_client_title": "I'm a Client",
+  "roleSelection_client_subtitle": "Find the perfect trainer to start your fitness journey.",
+  "roleSelection_trainer_title": "I'm a Trainer",
+  "roleSelection_trainer_subtitle": "Showcase your expertise, manage clients, and grow your business.",
+
   "signup_createAccountTitle": "Create Your Account",
   "signup_step1_subtitle": "Let's start with the basics.",
   "signup_usernameLabel": "Username",

@@ -1,5 +1,6 @@
 
 
+
 import React, { type FC } from 'react';
 
 interface IconProps {
@@ -202,5 +203,27 @@ export const BitIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
       <path d="M15 11H21.6667C24.0258 11 25.8333 12.8075 25.8333 15.1667V24.8333C25.8333 27.1925 24.0258 29 21.6667 29H15V11Z" fill="#00A9FF"/>
       <path d="M15 11H20.8333C22.5458 11 24 12.4542 24 14.1667V16C24 17.7125 22.5458 19.1667 20.8333 19.1667H15V11Z" fill="white"/>
       <path d="M15 19.1667H21.6667C24.0258 19.1667 25.8333 20.9742 25.8333 23.3333V25.1667C25.8333 27.5258 24.0258 29.3333 21.6667 29.3333H15V19.1667Z" fill="white"/>
+    </svg>
+);
+
+export const FastaLogoIcon: FC<IconProps> = ({ className = 'w-7 h-7' }) => (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="m13 17 5-5-5-5" />
+      <path d="m6 17 5-5-5-5" />
+    </svg>
+);
+
+export const LogoutIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H21" />
     </svg>
 );

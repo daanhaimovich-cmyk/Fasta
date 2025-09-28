@@ -1,5 +1,6 @@
 
 
+
 import React, { useState, useRef, type FC } from 'react';
 import { CITIES } from '../constants';
 import { Specialty, type Trainer } from '../types';
@@ -8,11 +9,10 @@ import { useTranslation } from '../contexts/LanguageContext';
 import { View } from '../App';
 
 interface TrainerSignUpProps {
-    onSignUpSuccess: (trainerData: Omit<Trainer, 'id' | 'reviews' | 'isOnline' | 'coordinates'>) => void;
-    onNavigate: (view: View) => void;
+    onSignUpSuccess: (trainerData: any) => void;
 }
 
-const TrainerSignUp: FC<TrainerSignUpProps> = ({ onSignUpSuccess, onNavigate }) => {
+const TrainerSignUp: FC<TrainerSignUpProps> = ({ onSignUpSuccess }) => {
     const { t } = useTranslation();
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
@@ -32,7 +32,6 @@ const TrainerSignUp: FC<TrainerSignUpProps> = ({ onSignUpSuccess, onNavigate }) 
         agendaLink: ''
     });
     const [errors, setErrors] = useState({ email: '', password: '' });
-    const [submitted, setSubmitted] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -100,17 +99,11 @@ const TrainerSignUp: FC<TrainerSignUpProps> = ({ onSignUpSuccess, onNavigate }) 
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const newTrainerData = {
-            name: formData.fullName,
-            email: formData.email,
+        const fullTrainerData = {
+            ...formData,
             photoUrl: formData.profilePicturePreview || `https://picsum.photos/seed/${formData.fullName.replace(/\s/g, '')}/400/400`,
-            specialties: formData.specialties,
-            hourlyRate: parseInt(formData.hourlyRate, 10),
-            location: formData.city,
-            bio: formData.bio,
         };
-        onSignUpSuccess(newTrainerData);
-        setSubmitted(true);
+        onSignUpSuccess(fullTrainerData);
     };
 
     const ProgressIndicator = () => (
@@ -139,23 +132,6 @@ const TrainerSignUp: FC<TrainerSignUpProps> = ({ onSignUpSuccess, onNavigate }) 
         { key: t('signup_locationOnline'), value: 'Online' },
         { key: t('trainerSignup_locationClientsHome'), value: "Client's Home" }
     ];
-
-    if (submitted) {
-        return (
-            <div className="max-w-xl mx-auto bg-slate-800/50 p-8 rounded-lg shadow-2xl border border-slate-700/50 text-center animate-fade-in-down">
-                <CheckCircleIcon className="w-16 h-16 text-emerald-400 mx-auto mb-4" />
-                <h2 className="text-3xl font-bold text-white">{t('trainerSignup_successTitle', { name: formData.fullName.split(' ')[0] })}</h2>
-                <p className="text-slate-300 mt-2">{t('trainerSignup_successSubtitle')}</p>
-                <p className="text-slate-400 mt-4 text-sm">{t('trainerSignup_successInfo')}</p>
-                <button 
-                    onClick={() => onNavigate('discovery')}
-                    className="mt-8 w-full bg-emerald-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-emerald-600 transition-colors duration-200 shadow-md shadow-emerald-500/20"
-                >
-                    {t('trainerSignup_successButton')}
-                </button>
-            </div>
-        )
-    }
 
     return (
         <div className="max-w-3xl mx-auto bg-slate-800/50 p-8 rounded-lg shadow-2xl border border-slate-700/50">
