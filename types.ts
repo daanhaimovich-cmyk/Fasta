@@ -1,10 +1,11 @@
 // FIX: Import FC type from React to resolve namespace issue.
 import type { FC } from 'react';
 
-// This declaration is necessary to inform TypeScript about the global 'L' object
-// provided by the Leaflet library, which is loaded via a <script> tag in index.html.
+// This declaration is necessary to inform TypeScript about the global objects
+// provided by external libraries (Leaflet, Stripe) which are loaded via <script> tags.
 declare global {
   var L: any;
+  var Stripe: any;
 }
 
 export enum Specialty {

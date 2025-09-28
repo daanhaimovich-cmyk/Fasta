@@ -2,12 +2,17 @@
 
 import React, { useState, useRef, type FC } from 'react';
 import { CITIES } from '../constants';
-import { Specialty } from '../types';
+import { Specialty, type Trainer } from '../types';
 import { EyeIcon, EyeOffIcon, UserCircleIcon, CameraIcon, LinkIcon, CheckCircleIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
+import { View } from '../App';
 
+interface TrainerSignUpProps {
+    onSignUpSuccess: (trainerData: Omit<Trainer, 'id' | 'reviews' | 'isOnline' | 'coordinates'>) => void;
+    onNavigate: (view: View) => void;
+}
 
-const TrainerSignUp: FC = () => {
+const TrainerSignUp: FC<TrainerSignUpProps> = ({ onSignUpSuccess, onNavigate }) => {
     const { t } = useTranslation();
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
@@ -18,6 +23,7 @@ const TrainerSignUp: FC = () => {
         fullName: '',
         age: '',
         city: '',
+        hourlyRate: '',
         experience: '',
         bio: '',
         certifications: '',
@@ -94,8 +100,16 @@ const TrainerSignUp: FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Here you would typically send data to a backend
-        console.log('Trainer Profile Submitted:', formData);
+        const newTrainerData = {
+            name: formData.fullName,
+            email: formData.email,
+            photoUrl: formData.profilePicturePreview || `https://picsum.photos/seed/${formData.fullName.replace(/\s/g, '')}/400/400`,
+            specialties: formData.specialties,
+            hourlyRate: parseInt(formData.hourlyRate, 10),
+            location: formData.city,
+            bio: formData.bio,
+        };
+        onSignUpSuccess(newTrainerData);
         setSubmitted(true);
     };
 
@@ -134,7 +148,7 @@ const TrainerSignUp: FC = () => {
                 <p className="text-slate-300 mt-2">{t('trainerSignup_successSubtitle')}</p>
                 <p className="text-slate-400 mt-4 text-sm">{t('trainerSignup_successInfo')}</p>
                 <button 
-                    onClick={() => { setSubmitted(false); setStep(1); }}
+                    onClick={() => onNavigate('discovery')}
                     className="mt-8 w-full bg-emerald-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-emerald-600 transition-colors duration-200 shadow-md shadow-emerald-500/20"
                 >
                     {t('trainerSignup_successButton')}
@@ -224,17 +238,22 @@ const TrainerSignUp: FC = () => {
                                 <label htmlFor="age" className="block text-sm font-medium text-slate-300 mb-2">{t('signup_ageLabel')}</label>
                                 <input type="number" id="age" name="age" value={formData.age} onChange={handleInputChange} required min="18" max="100" className="w-full bg-slate-700 border border-slate-600 rounded-md py-2.5 px-4 text-white placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder={t('signup_agePlaceholder')} />
                             </div>
-                             <div>
-                                <label htmlFor="city" className="block text-sm font-medium text-slate-300 mb-2">{t('signup_cityLabel')}</label>
-                                <select id="city" name="city" value={formData.city} onChange={handleInputChange} required className="w-full bg-slate-700 border border-slate-600 rounded-md py-2.5 px-4 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                                    <option value="">{t('signup_citySelect')}</option>
-                                    {CITIES.sort().map(city => <option key={city} value={city}>{city}</option>)}
-                                </select>
+                            <div>
+                                <label htmlFor="hourlyRate" className="block text-sm font-medium text-slate-300 mb-2">{t('filters_maxHourlyRate')}</label>
+                                <input type="number" id="hourlyRate" name="hourlyRate" value={formData.hourlyRate} onChange={handleInputChange} required min="0" className="w-full bg-slate-700 border border-slate-600 rounded-md py-2.5 px-4 text-white placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder="e.g., 200" />
                             </div>
-                             <div>
+                            <div>
                                 <label htmlFor="experience" className="block text-sm font-medium text-slate-300 mb-2">{t('trainerSignup_experienceLabel')}</label>
                                 <input type="number" id="experience" name="experience" value={formData.experience} onChange={handleInputChange} required min="0" className="w-full bg-slate-700 border border-slate-600 rounded-md py-2.5 px-4 text-white placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder={t('trainerSignup_experiencePlaceholder')} />
                             </div>
+                        </div>
+
+                         <div>
+                            <label htmlFor="city" className="block text-sm font-medium text-slate-300 mb-2">{t('signup_cityLabel')}</label>
+                            <select id="city" name="city" value={formData.city} onChange={handleInputChange} required className="w-full bg-slate-700 border border-slate-600 rounded-md py-2.5 px-4 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                                <option value="">{t('signup_citySelect')}</option>
+                                {CITIES.sort().map(city => <option key={city} value={city}>{city}</option>)}
+                            </select>
                         </div>
 
                         <div>

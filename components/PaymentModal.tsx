@@ -1,4 +1,4 @@
-import React, { useState, type FC } from 'react';
+import React, { useState, useEffect, useRef, type FC } from 'react';
 import type { Trainer } from '../types';
 import { XIcon, CreditCardIcon, LockClosedIcon, BitIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
@@ -10,76 +10,106 @@ interface PaymentModalProps {
   onPaymentSuccess: () => void;
 }
 
+// A public test key should be used here.
+// In a real application, this would come from an environment variable.
+const STRIPE_PUBLIC_KEY = 'pk_test_51PbiPzRxt9145dyoTxlfe2YCVb013G1xG8uARfL7zRVx0k3ePSDt2d4s28o9d4w3RHp59w8lJ10L3bL5D3I3d2Ua00bJ1D9Fh9';
+
+const cardElementStyle = {
+  base: {
+    color: '#e2e8f0', // slate-200
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '16px',
+    '::placeholder': {
+      color: '#64748b' // slate-500
+    }
+  },
+  invalid: {
+    color: '#f87171', // red-400
+    iconColor: '#f87171'
+  }
+};
+
 const PaymentModal: FC<PaymentModalProps> = ({ trainer, bookingDetails, onClose, onPaymentSuccess }) => {
   const { t } = useTranslation();
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'bit'>('card');
-  const [cardDetails, setCardDetails] = useState({
-    name: '',
-    number: '',
-    expiry: '',
-    cvc: ''
-  });
-  const [errors, setErrors] = useState({ name: '', number: '', expiry: '', cvc: '' });
   const [isProcessing, setIsProcessing] = useState(false);
+  const [stripeError, setStripeError] = useState<string | null>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    let formattedValue = value;
+  const stripeRef = useRef<any>(null);
+  const elementsRef = useRef<any>(null);
+  const cardElementRef = useRef<HTMLDivElement>(null);
 
-    if (name === 'number') {
-      formattedValue = value.replace(/\D/g, '').replace(/(\d{4})/g, '$1 ').trim();
-      if (formattedValue.length > 19) return;
-    } else if (name === 'expiry') {
-      formattedValue = value.replace(/\D/g, '').replace(/(\d{2})(\d)/, '$1 / $2');
-      if (formattedValue.length > 7) return;
-    } else if (name === 'cvc') {
-      formattedValue = value.replace(/\D/g, '');
-      if (formattedValue.length > 3) return;
+  useEffect(() => {
+    if (paymentMethod === 'card' && !stripeRef.current) {
+      if (window.Stripe) {
+        stripeRef.current = window.Stripe(STRIPE_PUBLIC_KEY);
+        elementsRef.current = stripeRef.current.elements();
+        
+        const cardElement = elementsRef.current.create('card', { style: cardElementStyle });
+        
+        if (cardElementRef.current) {
+          cardElement.mount(cardElementRef.current);
+          cardElement.on('change', (event: any) => {
+            if (event.error) {
+              setStripeError(event.error.message);
+            } else {
+              setStripeError(null);
+            }
+          });
+        }
+      } else {
+        console.error("Stripe.js has not loaded yet.");
+      }
     }
+  }, [paymentMethod]);
 
-    setCardDetails(prev => ({ ...prev, [name]: formattedValue }));
-    if (errors[name as keyof typeof errors]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+  const handleCardPayment = async () => {
+    if (!stripeRef.current || !elementsRef.current) {
+        console.error("Stripe has not initialized.");
+        return;
+    }
+    
+    setIsProcessing(true);
+    setStripeError(null);
+
+    const cardElement = elementsRef.current.getElement('card');
+
+    const { error, paymentMethod } = await stripeRef.current.createPaymentMethod({
+        type: 'card',
+        card: cardElement,
+    });
+
+    if (error) {
+        setStripeError(error.message);
+        setIsProcessing(false);
+    } else {
+        // In a real application, you would send paymentMethod.id to your server
+        // to confirm the payment. Here, we'll simulate success.
+        console.log('Stripe PaymentMethod created:', paymentMethod);
+        setTimeout(() => {
+            setIsProcessing(false);
+            onPaymentSuccess();
+        }, 1500);
     }
   };
 
-  const validateForm = () => {
-    const newErrors = { name: '', number: '', expiry: '', cvc: '' };
-    let isValid = true;
-
-    if (!cardDetails.name.trim()) {
-      newErrors.name = t('paymentModal_card_error_name');
-      isValid = false;
-    }
-    if (cardDetails.number.length !== 19) {
-      newErrors.number = t('paymentModal_card_error_number');
-      isValid = false;
-    }
-    if (!/^(0[1-9]|1[0-2])\s\/\s\d{2}$/.test(cardDetails.expiry)) {
-      newErrors.expiry = t('paymentModal_card_error_expiry');
-      isValid = false;
-    }
-    if (cardDetails.cvc.length !== 3) {
-      newErrors.cvc = t('paymentModal_card_error_cvc');
-      isValid = false;
-    }
-    setErrors(newErrors);
-    return isValid;
-  };
+  const handleBitPayment = () => {
+      setIsProcessing(true);
+      // Simulate confirming payment after user has scanned
+      setTimeout(() => {
+          setIsProcessing(false);
+          onPaymentSuccess();
+      }, 1500);
+  }
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (paymentMethod === 'card') {
-      if (!validateForm()) {
-          return;
-      }
+      handleCardPayment();
+    } else {
+      handleBitPayment();
     }
-    setIsProcessing(true);
-    // Simulate payment processing
-    setTimeout(() => {
-      setIsProcessing(false);
-      onPaymentSuccess();
-    }, 1500);
   };
 
   const locale = 'en-US';
@@ -144,38 +174,18 @@ const PaymentModal: FC<PaymentModalProps> = ({ trainer, bookingDetails, onClose,
           </div>
 
           {paymentMethod === 'card' ? (
-            <form className="mt-6 space-y-4 animate-fade-in-down">
+            <div className="mt-6 space-y-4 animate-fade-in-down">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">{t('paymentModal_card_nameLabel')}</label>
-                  <input type="text" id="name" name="name" value={cardDetails.name} onChange={handleInputChange} className={`w-full bg-slate-700 border rounded-md py-2.5 px-4 text-white placeholder-slate-400 focus:ring-2 focus:border-emerald-500 transition ${errors.name ? 'border-red-500 ring-red-500/50' : 'border-slate-600 focus:ring-emerald-500'}`} placeholder={t('paymentModal_card_namePlaceholder')} />
-                  {errors.name && <p className="text-red-400 text-xs mt-1.5">{errors.name}</p>}
+                    <label className="block text-sm font-medium text-slate-300 mb-2">{t('paymentModal_card_numberLabel')}</label>
+                    <div className="bg-slate-700 border border-slate-600 rounded-md py-3 px-4 focus-within:ring-2 focus-within:ring-emerald-500 focus-within:border-emerald-500">
+                        <div ref={cardElementRef}></div>
+                    </div>
+                    {stripeError && <p className="text-red-400 text-xs mt-1.5">{stripeError}</p>}
                 </div>
-                
-                <div>
-                  <label htmlFor="number" className="block text-sm font-medium text-slate-300 mb-2">{t('paymentModal_card_numberLabel')}</label>
-                  <div className="relative">
-                    <CreditCardIcon className="absolute start-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input type="text" id="number" name="number" value={cardDetails.number} onChange={handleInputChange} className={`w-full bg-slate-700 border rounded-md py-2.5 ps-10 pe-4 text-white placeholder-slate-400 focus:ring-2 focus:border-emerald-500 transition ${errors.number ? 'border-red-500 ring-red-500/50' : 'border-slate-600 focus:ring-emerald-500'}`} placeholder={t('paymentModal_card_numberPlaceholder')} />
-                  </div>
-                  {errors.number && <p className="text-red-400 text-xs mt-1.5">{errors.number}</p>}
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="expiry" className="block text-sm font-medium text-slate-300 mb-2">{t('paymentModal_card_expiryLabel')}</label>
-                    <input type="text" id="expiry" name="expiry" value={cardDetails.expiry} onChange={handleInputChange} className={`w-full bg-slate-700 border rounded-md py-2.5 px-4 text-white placeholder-slate-400 focus:ring-2 focus:border-emerald-500 transition ${errors.expiry ? 'border-red-500 ring-red-500/50' : 'border-slate-600 focus:ring-emerald-500'}`} placeholder={t('paymentModal_card_expiryPlaceholder')} />
-                    {errors.expiry && <p className="text-red-400 text-xs mt-1.5">{errors.expiry}</p>}
-                  </div>
-                  <div>
-                    <label htmlFor="cvc" className="block text-sm font-medium text-slate-300 mb-2">{t('paymentModal_card_cvcLabel')}</label>
-                    <input type="text" id="cvc" name="cvc" value={cardDetails.cvc} onChange={handleInputChange} className={`w-full bg-slate-700 border rounded-md py-2.5 px-4 text-white placeholder-slate-400 focus:ring-2 focus:border-emerald-500 transition ${errors.cvc ? 'border-red-500 ring-red-500/50' : 'border-slate-600 focus:ring-emerald-500'}`} placeholder={t('paymentModal_card_cvcPlaceholder')} />
-                    {errors.cvc && <p className="text-red-400 text-xs mt-1.5">{errors.cvc}</p>}
-                  </div>
-                </div>
-                <p className="text-xs text-slate-500 flex items-center justify-center gap-2 pt-2">
+                 <p className="text-xs text-slate-500 flex items-center justify-center gap-2 pt-2">
                     <LockClosedIcon className="w-4 h-4" /> {t('paymentModal_card_secure')}
                 </p>
-            </form>
+            </div>
           ) : (
              <div className="mt-6 text-center py-4 px-4 animate-fade-in-down">
                 <h3 className="text-lg font-semibold text-white">{t('paymentModal_bit_title')}</h3>
@@ -195,7 +205,7 @@ const PaymentModal: FC<PaymentModalProps> = ({ trainer, bookingDetails, onClose,
         <div className="p-6 bg-slate-900/50 mt-auto rounded-b-2xl border-t border-slate-700">
           <button
             onClick={handleSubmit}
-            disabled={isProcessing}
+            disabled={isProcessing || (paymentMethod === 'card' && !!stripeError)}
             className="w-full bg-emerald-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-emerald-600 transition-colors duration-200 shadow-md shadow-emerald-500/20 disabled:bg-slate-600 disabled:cursor-not-allowed disabled:shadow-none flex items-center justify-center"
           >
             {isProcessing ? (
@@ -207,7 +217,7 @@ const PaymentModal: FC<PaymentModalProps> = ({ trainer, bookingDetails, onClose,
                     {t('paymentModal_submitButton_processing')}
                 </>
             ) : (
-                paymentMethod === 'card' ? t('paymentModal_submitButton_card', { rate: trainer.hourlyRate }) : t('paymentModal_submitButton_bit')
+                paymentMethod === 'card' ? t('paymentModal_submitButton_card', { rate: trainer.hourlyRate }) : t('paymentModal_submitButton_bit_confirm')
             )}
           </button>
         </div>

@@ -216,6 +216,19 @@ const App: FC = () => {
      handleLoginSuccess(userData, true); // Default to remembering new sign-ups
   };
 
+  const handleTrainerSignUp = (newTrainerData: Omit<Trainer, 'id' | 'reviews' | 'isOnline' | 'coordinates'>) => {
+      const newTrainer: Trainer = {
+          ...newTrainerData,
+          id: trainers.length + 1, // Simple ID generation for mock data
+          reviews: [],
+          // FIX: The type for newTrainerData omits the `isOnline` property, so it cannot be accessed here.
+          isOnline: newTrainerData.location === 'Online',
+          // For demo, let's assign a random nearby coordinate if a known city is chosen
+          coordinates: MOCK_TRAINERS.find(t => t.location === newTrainerData.location)?.coordinates || { lat: 32.0853, lng: 34.7818 }
+      };
+      setTrainers(prev => [...prev, newTrainer]);
+  };
+
   const handleInitiateBooking = (trainer: Trainer) => {
       setTrainerToBook(trainer);
   };
@@ -383,6 +396,7 @@ const App: FC = () => {
                   ...reviewData,
               };
               const updatedReviews = [...trainer.reviews, newReview];
+              const newAvgRating = updatedReviews.reduce((acc, r) => acc + r.rating, 0) / updatedReviews.length;
               return { ...trainer, reviews: updatedReviews };
           }
           return trainer;
@@ -402,7 +416,7 @@ const App: FC = () => {
         case 'client-signup':
             return <SignUp onSignUpSuccess={handleSignUpSuccess} onNavigateToLogin={() => setView('login')} />;
         case 'trainer-signup':
-            return <TrainerSignUp />;
+            return <TrainerSignUp onSignUpSuccess={handleTrainerSignUp} onNavigate={handleNavigate} />;
         case 'login':
             return <Login onLoginSuccess={handleLoginSuccess} onNavigateToSignUp={() => setView('client-signup')} />;
         case 'dashboard':
