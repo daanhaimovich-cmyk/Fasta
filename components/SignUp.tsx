@@ -1,6 +1,5 @@
 
-
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, type FC } from 'react';
 import { ISRAELI_CITIES } from '../constants';
 import { EyeIcon, EyeOffIcon, UserCircleIcon, CameraIcon } from './IconComponents';
 import type { UserProfile } from '../types';
@@ -11,7 +10,7 @@ interface SignUpProps {
     onNavigateToLogin: () => void;
 }
 
-const SignUp: React.FC<SignUpProps> = ({ onSignUpSuccess, onNavigateToLogin }) => {
+const SignUp: FC<SignUpProps> = ({ onSignUpSuccess, onNavigateToLogin }) => {
     const { t } = useTranslation();
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({

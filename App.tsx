@@ -1,7 +1,5 @@
 
-
-
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, type FC } from 'react';
 import Header from './components/Header';
 import SignUp from './components/SignUp';
 import TrainerSignUp from './components/TrainerSignUp';
@@ -29,7 +27,7 @@ interface PendingBooking {
     details: { date: string; time: string; message: string };
 }
 
-const App: React.FC = () => {
+const App: FC = () => {
   const [view, setView] = useState<View>('discovery');
   const [user, setUser] = useState<UserProfile | null>(null);
   const [trainerToBook, setTrainerToBook] = useState<Trainer | null>(null);
@@ -116,6 +114,21 @@ const App: React.FC = () => {
         return count + (unread ? 1 : 0);
     }, 0);
   }, [user, userConversations]);
+
+  const handleMarkConversationAsRead = useCallback((conversationId: string) => {
+    if(!user) return;
+    setConversations(prev => prev.map(convo => {
+        if (convo.id === conversationId) {
+            return {
+                ...convo,
+                messages: convo.messages.map(msg => 
+                    msg.senderId !== user.email ? { ...msg, read: true } : msg
+                ),
+            };
+        }
+        return convo;
+    }));
+  }, [user]);
 
   const handleNavigate = (targetView: View) => {
     if (targetView === 'messages' && selectedConversationId) {
@@ -292,26 +305,11 @@ const App: React.FC = () => {
       }
   };
   
-  const handleMarkConversationAsRead = (conversationId: string) => {
-    if(!user) return;
-    setConversations(prev => prev.map(convo => {
-        if (convo.id === conversationId) {
-            return {
-                ...convo,
-                messages: convo.messages.map(msg => 
-                    msg.senderId !== user.email ? { ...msg, read: true } : msg
-                ),
-            };
-        }
-        return convo;
-    }));
-  };
-
-  const handleSelectConversation = (conversationId: string) => {
+  const handleSelectConversation = useCallback((conversationId: string) => {
       setSelectedConversationId(conversationId);
       handleMarkConversationAsRead(conversationId);
       setView('messages');
-  };
+  }, [handleMarkConversationAsRead]);
 
   const handleSendMessage = (conversationId: string, content: string) => {
       if (!user) return;

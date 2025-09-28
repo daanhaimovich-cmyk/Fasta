@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+
+import React, { useEffect, useRef, type FC } from 'react';
 import type { Trainer } from '../types';
 
-const TrainerMap: React.FC<{ trainers: Trainer[] }> = ({ trainers }) => {
+const TrainerMap: FC<{ trainers: Trainer[] }> = ({ trainers }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
   const markersRef = useRef<any[]>([]);

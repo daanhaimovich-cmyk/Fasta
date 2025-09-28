@@ -1,6 +1,5 @@
 
-
-import React from 'react';
+import React, { type FC } from 'react';
 import type { UserProfile } from '../types';
 import { View } from '../App';
 import { DashboardIcon, ChatBubbleIcon } from './IconComponents';
@@ -13,7 +12,7 @@ interface HeaderProps {
     unreadMessagesCount: number;
 }
 
-const Header: React.FC<HeaderProps> = ({ onNavigate, user, onLogout, unreadMessagesCount }) => {
+const Header: FC<HeaderProps> = ({ onNavigate, user, onLogout, unreadMessagesCount }) => {
   const { language, setLanguage, t } = useTranslation();
 
   const handleMessagesClick = () => {

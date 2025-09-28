@@ -1,6 +1,5 @@
 
-
-import React, { useState } from 'react';
+import React, { useState, type FC } from 'react';
 import type { Filters, Specialty } from '../types';
 import { StarIcon, ChevronUpIcon, ChevronDownIcon, LocationMarkerIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
@@ -11,7 +10,7 @@ interface FilterSidebarProps {
   availableSpecialties: Specialty[];
 }
 
-const FilterSection: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
+const FilterSection: FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -25,7 +24,7 @@ const FilterSection: React.FC<{ title: string; children: React.ReactNode }> = ({
   );
 };
 
-const FilterSidebar: React.FC<FilterSidebarProps> = ({ filters, setFilters, availableSpecialties }) => {
+const FilterSidebar: FC<FilterSidebarProps> = ({ filters, setFilters, availableSpecialties }) => {
   const { t } = useTranslation();
 
   const handleSpecialtyChange = (specialty: Specialty) => {

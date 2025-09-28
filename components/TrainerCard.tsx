@@ -1,6 +1,5 @@
 
-
-import React from 'react';
+import React, { type FC } from 'react';
 import type { Trainer } from '../types';
 import { StarIcon, LocationMarkerIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
@@ -11,7 +10,7 @@ interface TrainerCardProps {
   onViewProfile: (trainer: Trainer) => void;
 }
 
-const TrainerCard: React.FC<TrainerCardProps> = ({ trainer, onMessageTrainer, onViewProfile }) => {
+const TrainerCard: FC<TrainerCardProps> = ({ trainer, onMessageTrainer, onViewProfile }) => {
   const { t } = useTranslation();
   const avgRating = trainer.reviews.length > 0
     ? trainer.reviews.reduce((acc, review) => acc + review.rating, 0) / trainer.reviews.length

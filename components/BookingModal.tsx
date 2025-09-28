@@ -1,6 +1,5 @@
 
-
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, type FC } from 'react';
 import type { Trainer } from '../types';
 import { XIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
@@ -15,7 +14,7 @@ const TIME_SLOTS = [
   '09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'
 ];
 
-const BookingModal: React.FC<BookingModalProps> = ({ trainer, onClose, onConfirm }) => {
+const BookingModal: FC<BookingModalProps> = ({ trainer, onClose, onConfirm }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [message, setMessage] = useState('');
