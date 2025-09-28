@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FASTA - Find A Trainer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+      /* For custom scrollbar styling */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1e293b; /* slate-800 */
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #475569; /* slate-600 */
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #64748b; /* slate-500 */
+      }
+      /* Custom Leaflet Popup */
+      .custom-popup .leaflet-popup-content-wrapper {
+        background: #1e293b; /* slate-800 */
+        color: #e2e8f0; /* slate-200 */
+        border-radius: 8px;
+        border: 1px solid #334155; /* slate-700 */
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      }
+      .custom-popup .leaflet-popup-tip {
+        background: #1e293b; /* slate-800 */
+      }
+      .custom-popup .leaflet-popup-content {
+        margin: 12px;
+        min-width: 220px;
+      }
+      .custom-popup a.leaflet-popup-close-button {
+        color: #94a3b8; /* slate-400 */
+        padding: 8px 8px 0 0;
+      }
+      .custom-popup a.leaflet-popup-close-button:hover {
+        color: #fff;
+      }
+
+      /* Toast Animation */
+      @keyframes fade-in-down {
+        0% {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in-down {
+        animation: fade-in-down 0.5s ease-out forwards;
+      }
+      
+      /* Input focus and error animations */
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+      }
+      .animate-shake {
+        animation: shake 0.5s ease-in-out;
+      }
+      
+      /* Adding smooth transitions to form elements */
+      input, select, textarea {
+        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, ring-color 0.2s ease-in-out;
+      }
+
+      /* Custom Range Slider to remove "Giant Gray Pointer" */
+      input[type="range"].custom-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+      }
+      
+      /*-webkit- (Chrome, Safari, Opera, Edge)*/
+      input[type="range"].custom-slider::-webkit-slider-runnable-track {
+        background: #334155; /* slate-700 */
+        height: 8px;
+        border-radius: 4px;
+      }
+      input[type="range"].custom-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        margin-top: -6px; /* Positions thumb centrally on the track */
+        width: 20px;
+        height: 20px;
+        background: #10b981; /* emerald-500 */
+        border-radius: 50%;
+        border: 2px solid #f0fdf4; /* emerald-50 */
+      }
+
+      /*-moz- (Firefox)*/
+      input[type="range"].custom-slider::-moz-range-track {
+        background: #334155; /* slate-700 */
+        height: 8px;
+        border-radius: 4px;
+      }
+      input[type="range"].custom-slider::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        background: #10b981; /* emerald-500 */
+        border-radius: 50%;
+        border: 2px solid #f0fdf4; /* emerald-50 */
+        border: none; /* Reset Firefox default border */
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "@google/genai": "https://aistudiocdn.com/google-genai-1.2.1/index.js"
+  }
+}
+</script>
+</head>
+  <body class="bg-slate-900 text-slate-200">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
