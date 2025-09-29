@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { DesignModeProvider } from './contexts/DesignModeContext';
+import { ToastProvider } from './contexts/ToastContext';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -12,7 +14,11 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <LanguageProvider>
-      <App />
+      <ToastProvider>
+        <DesignModeProvider>
+          <App />
+        </DesignModeProvider>
+      </ToastProvider>
     </LanguageProvider>
   </React.StrictMode>
 );

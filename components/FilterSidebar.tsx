@@ -2,6 +2,8 @@
 
 
 
+
+
 import React, { useState, type FC } from 'react';
 import type { Filters, Specialty } from '../types';
 import { StarIcon, ChevronUpIcon, ChevronDownIcon, LocationMarkerIcon } from './IconComponents';
@@ -13,12 +15,12 @@ interface FilterSidebarProps {
   availableSpecialties: Specialty[];
 }
 
-const FilterSection: FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
+const FilterSection: FC<{ title: string; children: React.ReactNode, designId: string }> = ({ title, children, designId }) => {
   const [isOpen, setIsOpen] = useState(true);
   const { t } = useTranslation();
 
   return (
-    <div className="border-b border-slate-700 py-4">
+    <div data-design-id={designId} className="border-b border-slate-700 py-4">
       <button 
         onClick={() => setIsOpen(!isOpen)} 
         className="w-full flex justify-between items-center text-start"
@@ -55,10 +57,10 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ filters, setFilters, availableS
 
   return (
     <div>
-      <FilterSection title={t('filters_specialty')}>
+      <FilterSection title={t('filters_specialty')} designId="filter-section-specialty">
         <div className="space-y-2">
           {availableSpecialties.map(spec => (
-            <label key={spec} className="flex items-center space-x-3 cursor-pointer">
+            <label key={spec} data-design-id={`filter-specialty-checkbox-${spec}`} className="flex items-center space-x-3 cursor-pointer">
               <input
                 type="checkbox"
                 checked={filters.specialties.includes(spec)}
@@ -71,19 +73,20 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ filters, setFilters, availableS
         </div>
       </FilterSection>
 
-      <FilterSection title={t('filters_rating')}>
+      <FilterSection title={t('filters_rating')} designId="filter-section-rating">
          <div className="flex space-x-1">
           {[1, 2, 3, 4, 5].map(star => (
-            <button key={star} onClick={() => handleRatingChange(star)} className="focus:outline-none" title={t('filters_rateAtLeast', { count: star })}>
+            <button key={star} data-design-id={`filter-rating-star-${star}`} onClick={() => handleRatingChange(star)} className="focus:outline-none" title={t('filters_rateAtLeast', { count: star })}>
               <StarIcon filled={star <= filters.minRating} className="w-6 h-6"/>
             </button>
           ))}
         </div>
       </FilterSection>
       
-      <FilterSection title={t('filters_maxHourlyRate')}>
+      <FilterSection title={t('filters_maxHourlyRate')} designId="filter-section-price">
         <div className="space-y-2 pt-2">
           <input
+            data-design-id="filter-price-range-slider"
             type="range"
             min="80"
             max="500"
@@ -100,9 +103,10 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ filters, setFilters, availableS
         </div>
       </FilterSection>
 
-      <FilterSection title={t('filters_location')}>
+      <FilterSection title={t('filters_location')} designId="filter-section-location">
          <div className="relative">
              <input
+                data-design-id="filter-location-input"
                 type="text"
                 placeholder={t('filters_locationPlaceholder')}
                 value={filters.location}
@@ -112,7 +116,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ filters, setFilters, availableS
          </div>
       </FilterSection>
       
-       <div className="pt-4">
+       <div className="pt-4" data-design-id="filter-online-only-toggle">
         <label className="flex items-center justify-between cursor-pointer">
           <span className="text-lg font-semibold text-slate-100">{t('filters_onlineOnly')}</span>
           <div className="relative">

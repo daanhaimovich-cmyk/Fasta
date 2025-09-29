@@ -1,6 +1,3 @@
-
-
-
 import React, { type FC } from 'react';
 
 interface IconProps {
@@ -20,210 +17,236 @@ export const StarIcon: FC<IconProps> = ({ className = 'w-5 h-5', filled = true }
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
-      d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+      d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.88a.563.563 0 00-.586 0l-4.725 2.88a.562.562 0 01-.84-.61l1.285-5.385a.563.563 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
     />
   </svg>
 );
 
+export const LocationMarkerIcon: FC<IconProps> = ({ className = 'w-4 h-4' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 20 20" fill="currentColor">
+        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+    </svg>
+);
 
 export const ChevronUpIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
     </svg>
 );
 
 export const ChevronDownIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-    </svg>
-);
-
-
-export const LocationMarkerIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className}>
-        <path fillRule="evenodd" d="M9.69 18.933l.003.001a1.623 1.623 0 002.614 0l.003-.001A20.134 20.134 0 0016 11.54C16 8.013 13.314 5 10 5s-6 3.013-6 6.54c0 1.56.44 3.047 1.205 4.393l.001.002zM10 12a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-    </svg>
-);
-
-export const CurrencyShekelIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75H9.75a3.75 3.75 0 0 0-3.75 3.75v3.75a3.75 3.75 0 0 0 3.75 3.75h1.5m-1.5-7.5h3.75m-3.75 7.5h7.5a3.75 3.75 0 0 0 3.75-3.75v-3.75a3.75 3.75 0 0 0-3.75-3.75h-1.5" />
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
     </svg>
 );
 
 export const GridViewIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 8.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25v2.25A2.25 2.25 0 0 1 8.25 20.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6A2.25 2.25 0 0 1 15.75 3.75h2.25A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25A2.25 2.25 0 0 1 13.5 8.25V6ZM13.5 15.75A2.25 2.25 0 0 1 15.75 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25v2.25a2.25 2.25 0 0 1-2.25 2.25h-2.25a2.25 2.25 0 0 1-2.25-2.25v-2.25Z" />
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
     </svg>
 );
 
 export const MapViewIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.5-10.5a.75.75 0 0 0-.75-.75h-4.5a.75.75 0 0 0-.75.75v4.5a.75.75 0 0 0 .75.75h4.5a.75.75 0 0 0 .75-.75V5.25Zm-7.5 0A.75.75 0 0 1 3 4.5h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-.75.75H3a.75.75 0 0 1-.75-.75V5.25ZM9 18.75h.008v.008H9v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-    </svg>
-);
-
-export const XIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-    </svg>
-);
-
-export const EyeIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639l4.95-7.625a1.012 1.012 0 0 1 1.624 0l4.95 7.625a1.012 1.012 0 0 1 0 .639l-4.95 7.625a1.012 1.012 0 0 1-1.624 0l-4.95-7.625Z" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-    </svg>
-);
-
-export const EyeOffIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.243 4.243L6.228 6.228" />
-    </svg>
-);
-
-export const UserCircleIcon: FC<IconProps> = ({ className = 'w-10 h-10' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-    </svg>
-);
-
-export const CameraIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.776 48.776 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
-    </svg>
-);
-
-export const LinkIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
-  </svg>
-);
-
-export const ChatBubbleIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193l-3.72 3.72a1.05 1.05 0 0 1-1.485 0l-3.72-3.72a2.31 2.31 0 0 1-1.98-2.193v-4.286c0-.97.616-1.813 1.5-2.097m6.75 0a48.667 48.667 0 0 0-7.5 0" />
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 16.382V5.618a1 1 0 00-1.447-.894L15 7m0 10V7m0 10l-6 3" />
     </svg>
 );
 
 export const FilterIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.572a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 20 20" fill="currentColor">
+    <path fillRule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clipRule="evenodd" />
+  </svg>
+);
+
+export const XIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
     </svg>
 );
 
-export const DashboardIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605" />
-    </svg>
+export const EyeIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+  </svg>
 );
 
-export const SendIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+export const EyeOffIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.05 10.05 0 01-4.132 5.411m0 0L21 21" />
+  </svg>
+);
+
+export const UserCircleIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+  </svg>
+);
+
+export const CameraIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+  </svg>
+);
+
+export const LinkIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
     </svg>
 );
 
 export const CheckCircleIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
 );
 
-export const BronzeMedalIcon: FC<IconProps> = ({ className = 'w-12 h-12 text-[#CD7F32]' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-        <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
+export const CreditCardIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
     </svg>
 );
 
-export const SilverMedalIcon: FC<IconProps> = ({ className = 'w-12 h-12 text-[#C0C0C0]' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-        <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
-    </svg>
-);
-
-export const GoldMedalIcon: FC<IconProps> = ({ className = 'w-12 h-12 text-[#FFD700]' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-        <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
-    </svg>
-);
-
-export const DiamondMedalIcon: FC<IconProps> = ({ className = 'w-12 h-12 text-[#b9f2ff]' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-        <path d="M12.001 2.003c.877 0 1.72.33 2.362.97l6.638 6.638c1.312 1.313.11 3.583-1.57 3.583h-3.432l-2.93 5.385a.75.75 0 0 1-1.332 0l-2.93-5.385H5.321c-1.68 0-2.882-2.27-1.57-3.583l6.638-6.638a3.364 3.364 0 0 1 2.362-.971Zm0 1.5a1.864 1.864 0 0 0-1.313.538L4.05 10.68a2.083 2.083 0 0 0 1.27 3.315h3.918c.552 0 1.053.302 1.312.787l2.45 4.505 2.45-4.505c.259-.485.76-.787 1.312-.787h3.918a2.083 2.083 0 0 0 1.27-3.315L13.313 4.041a1.864 1.864 0 0 0-1.312-.538Z" />
-    </svg>
-);
-
-export const TrophyIcon: FC<IconProps> = ({ className = 'w-12 h-12 text-[#FFC107]' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-        <path d="M18.75 3.375c.414 0 .75.336.75.75v15.75a.75.75 0 0 1-.75.75h-3.75a.75.75 0 0 1 0-1.5h3v-15h-13.5v15h3a.75.75 0 0 1 0 1.5h-3.75a.75.75 0 0 1-.75-.75V4.125a.75.75 0 0 1 .75-.75h13.5Zm-10.5 0a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V4.125a.75.75 0 0 1 .75-.75ZM15.75 6a.75.75 0 0 0-.75-.75h-6a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 .75-.75ZM12 6.75a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3ZM14.25 12a2.25 2.25 0 1 0-4.5 0 2.25 2.25 0 0 0 4.5 0Z" />
-    </svg>
-);
-
-export const LockClosedIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className}>
-      <path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd" />
-    </svg>
-);
-
-export const TargetIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.82m5.84-2.56a12.025 12.025 0 0 1-4.07 6.13m-6.36-2.56V21.75a6 6 0 0 1-5.84-7.38v-4.82m5.84 2.56a12.025 12.025 0 0 0-4.07-6.13m-6.36 2.56V2.25a6 6 0 0 1 5.84 7.38v4.82m-5.84-2.56a12.025 12.025 0 0 0 4.07 6.13m6.36 2.56v4.82a6 6 0 0 1 5.84-7.38v-4.82m-5.84 2.56a12.025 12.025 0 0 1 4.07-6.13m6.36-2.56V2.25a6 6 0 0 0-5.84 7.38v4.82m-5.84 2.56a12.025 12.025 0 0 0-4.07 6.13" />
-    </svg>
-);
-
-export const UsersIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m-7.5-2.962a3.75 3.75 0 1 0-7.5 0 3.75 3.75 0 0 0 7.5 0ZM10.5 1.5a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-    </svg>
-);
-
-export const BriefcaseIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 14.15v4.05a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V8.625a2.25 2.25 0 0 1 2.25-2.25h15A2.25 2.25 0 0 1 21.75 8.625v4.05m-15.82-8.39-2.25-2.25a2.25 2.25 0 0 1 0-3.182m15.82 13.82L18 18.25m-3-3.75a3 3 0 1 0-6 0 3 3 0 0 0 6 0Z" />
-    </svg>
-);
-
-export const SparklesIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
-    </svg>
-);
-
-export const CreditCardIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 21Z" />
+export const LockClosedIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
     </svg>
 );
 
 export const BitIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
-    <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="20" cy="20" r="20" fill="#00A9FF"/>
-      <path d="M15 11H21.6667C24.0258 11 25.8333 12.8075 25.8333 15.1667V24.8333C25.8333 27.1925 24.0258 29 21.6667 29H15V11Z" fill="#00A9FF"/>
-      <path d="M15 11H20.8333C22.5458 11 24 12.4542 24 14.1667V16C24 17.7125 22.5458 19.1667 20.8333 19.1667H15V11Z" fill="white"/>
-      <path d="M15 19.1667H21.6667C24.0258 19.1667 25.8333 20.9742 25.8333 23.3333V25.1667C25.8333 27.5258 24.0258 29.3333 21.6667 29.3333H15V19.1667Z" fill="white"/>
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="currentColor" viewBox="0 0 256 256">
+        <path d="M168,40H88A48,48,0,0,0,40,88v80a48,48,0,0,0,48,48h80a48,48,0,0,0,48-48V88A48,48,0,0,0,168,40Zm-29.66,61.66-32,32A8,8,0,0,1,96,128V104H80a8,8,0,0,1,0-16h24a8,8,0,0,1,5.66-2.34L128,67.31l18.34,18.35A8,8,0,0,1,138.34,101.66ZM176,168H136a8,8,0,0,1,0-16h16v-8a8,8,0,0,1,16,0v8h8a8,8,0,0,1,0,16Z"></path>
     </svg>
 );
 
-export const FastaLogoIcon: FC<IconProps> = ({ className = 'w-7 h-7' }) => (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="m13 17 5-5-5-5" />
-      <path d="m6 17 5-5-5-5" />
+export const BronzeMedalIcon: FC<IconProps> = ({ className = 'w-12 h-12' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="url(#bronze-gradient)" className={className}>
+    <defs>
+      <radialGradient id="bronze-gradient" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%" stopColor="#f8d8c0"/>
+        <stop offset="50%" stopColor="#c89c80"/>
+        <stop offset="100%" stopColor="#a07050"/>
+      </radialGradient>
+    </defs>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+    <path d="M12 12.75l-2.83 1.49.54-3.15-2.29-2.22 3.16-.46L12 6l1.42 2.41 3.16.46-2.29 2.22.54 3.15z"/>
+  </svg>
+);
+
+export const SilverMedalIcon: FC<IconProps> = ({ className = 'w-12 h-12' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="url(#silver-gradient)" className={className}>
+    <defs>
+      <radialGradient id="silver-gradient" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%" stopColor="#ffffff"/>
+        <stop offset="50%" stopColor="#d9d9d9"/>
+        <stop offset="100%" stopColor="#b3b3b3"/>
+      </radialGradient>
+    </defs>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+    <path d="M12 12.75l-2.83 1.49.54-3.15-2.29-2.22 3.16-.46L12 6l1.42 2.41 3.16.46-2.29 2.22.54 3.15z"/>
+  </svg>
+);
+
+export const GoldMedalIcon: FC<IconProps> = ({ className = 'w-12 h-12' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="url(#gold-gradient)" className={className}>
+    <defs>
+      <radialGradient id="gold-gradient" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%" stopColor="#fff59d"/>
+        <stop offset="50%" stopColor="#ffb300"/>
+        <stop offset="100%" stopColor="#c48b00"/>
+      </radialGradient>
+    </defs>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+    <path d="M12 12.75l-2.83 1.49.54-3.15-2.29-2.22 3.16-.46L12 6l1.42 2.41 3.16.46-2.29 2.22.54 3.15z"/>
+  </svg>
+);
+
+export const DiamondMedalIcon: FC<IconProps> = ({ className = 'w-12 h-12' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="url(#diamond-gradient)" className={className}>
+    <defs>
+      <radialGradient id="diamond-gradient" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0%" stopColor="#e0f7fa"/>
+        <stop offset="50%" stopColor="#80deea"/>
+        <stop offset="100%" stopColor="#00acc1"/>
+      </radialGradient>
+    </defs>
+    <path d="M12 1.33l2.35 4.77L20 7.33l-4 3.89.94 5.46L12 14.17l-4.94 2.51.94-5.46-4-3.89 5.65-1.23L12 1.33M12 4.47l-1.57 3.18-3.5.76 2.53 2.47-.6 3.48L12 12.6l3.14 1.78-.6-3.48 2.53-2.47-3.5-.76L12 4.47z"/>
+    <path d="m12 1.33-4.94 2.51L12 6l4.94-2.16L12 1.33zM4 7.33l4.94 2.16L12 6 7.06 3.84 4 7.33zm11.06-3.49L12 6l3.14 3.49 4.94-2.16-3.02-3.49zM4.94 16.67 12 14.17l-2.29 4.67-4.77-2.17zM19.06 16.67l-2.29-4.67L12 14.17l4.77 2.5 2.29-2.17z"/>
+  </svg>
+);
+
+export const TrophyIcon: FC<IconProps> = ({ className = 'w-12 h-12' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="url(#gold-gradient)" className={className}>
+    <path d="M20.2,6H19V3c0-0.6-0.4-1-1-1h-4c-0.6,0-1,0.4-1,1v3h-2V3c0-0.6-0.4-1-1-1H6C5.4,2,5,2.4,5,3v3H3.8C3.3,6,3,6.4,3,6.8V8 c0,0.4,0.3,0.8,0.7,0.9L6,10v7c0,0.6,0.4,1,1,1h1v3H7c-0.6,0-1,0.4-1,1s0.4,1,1,1h10c0.6,0,1-0.4,1-1s-0.4-1-1-1h-1v-3h1 c0.6,0,1-0.4,1-1v-7l2.3-1.1C20.7,8.8,21,8.4,21,8v-1.2C21,6.4,20.7,6,20.2,6z M15,4h2v2h-2V4z M7,4h2v2H7V4z"/>
+  </svg>
+);
+
+export const ChatBubbleIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+);
+
+export const SendIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 20 20" fill="currentColor">
+        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
     </svg>
+);
+
+
+export const FastaLogoIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.38,8.23L8.6,4.45a1,1,0,0,0-1.42,0L3.4,8.23a1,1,0,0,0,0,1.42L4.81,11l4.47,4.47a3,3,0,0,0,4.24,0l.71-.71a1,1,0,0,0,0-1.42Z"/>
+        <path d="M20.59,8.23a1,1,0,0,0-1.42,0L13,14.45,11.62,13a1,1,0,0,0-1.42,1.42l2.82,2.82a3,3,0,0,0,4.24,0l4.76-4.76a1,1,0,0,0,0-1.42Z"/>
+    </svg>
+);
+
+export const DashboardIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 20 20" fill="currentColor">
+    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+  </svg>
 );
 
 export const LogoutIcon: FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H21" />
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
     </svg>
+);
+
+export const TargetIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+  </svg>
+);
+
+export const ClientGroupIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+  </svg>
+);
+
+
+export const BriefcaseIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+  </svg>
+);
+
+export const PencilIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+    </svg>
+);
+
+export const WalletIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 3a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 12m15.75 6H5.25a2.25 2.25 0 0 1-2.25-2.25V12m18 0h-2.25m-13.5 0h-2.25" />
+  </svg>
+);
+
+export const CalendarDaysIcon: FC<IconProps> = ({ className = 'w-6 h-6' }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0h18M12 12.75h.008v.008H12v-.008Zm0 3h.008v.008H12v-.008Zm-3-3h.008v.008H9v-.008Zm0 3h.008v.008H9v-.008Zm-3-3h.008v.008H6v-.008Zm0 3h.008v.008H6v-.008Zm9-3h.008v.008H15v-.008Zm0 3h.008v.008H15v-.008Zm-6-3h.008v.008H9v-.008Zm3 0h.008v.008H12v-.008Z" />
+  </svg>
 );

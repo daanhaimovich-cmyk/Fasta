@@ -1,7 +1,3 @@
-
-
-
-
 import React, { useState, useEffect, useMemo, useCallback, type FC } from 'react';
 import Header from './components/Header';
 import SignUp from './components/SignUp';
@@ -13,17 +9,21 @@ import BookingModal from './components/BookingModal';
 import PaymentModal from './components/PaymentModal';
 import BookingConfirmationModal from './components/BookingConfirmationModal';
 import Dashboard from './components/Dashboard';
+import TrainerDashboard from './components/TrainerDashboard';
 import MedalUnlockedModal from './components/MedalUnlockedModal';
 import MessagingCenter from './components/MessagingCenter';
 import About from './components/About';
 import RoleSelection from './components/RoleSelection';
+import Verification from './components/Verification';
+import DesignModeToggle from './components/DesignModeToggle';
 import { MOCK_TRAINERS, MOCK_CONVERSATIONS, MOCK_USERS } from './constants';
 import { ALL_MEDALS } from './medals';
 import type { Trainer, Review, UserProfile, Booking, Medal, Conversation, Message, Participant } from './types';
 import { useTranslation } from './contexts/LanguageContext';
+import { useToast } from './contexts/ToastContext';
 
 
-export type View = 'discovery' | 'signup-role-select' | 'client-signup' | 'trainer-signup' | 'login' | 'dashboard' | 'messages' | 'about';
+export type View = 'discovery' | 'signup-role-select' | 'client-signup' | 'trainer-signup' | 'login' | 'dashboard' | 'messages' | 'about' | 'verification';
 
 interface PendingBooking {
     trainer: Trainer;
@@ -39,13 +39,22 @@ const App: FC = () => {
   const [pendingBooking, setPendingBooking] = useState<PendingBooking | null>(null);
   const [confirmedBooking, setConfirmedBooking] = useState<Booking | null>(null);
   const [newlyUnlockedMedal, setNewlyUnlockedMedal] = useState<Medal | null>(null);
+  const [isDevMode, setIsDevMode] = useState(false);
+  const [emailForVerification, setEmailForVerification] = useState<string | null>(null);
   
   // Messaging State
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
   const { t } = useTranslation();
+  const { addToast } = useToast();
 
   useEffect(() => {
+    // Check for dev mode flag in URL
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('dev') === 'true') {
+        setIsDevMode(true);
+    }
+
     // This is a one-time mock data setup for demonstration
     if (!localStorage.getItem('fasta_conversations_initialized')) {
       localStorage.setItem('fasta_conversations', JSON.stringify(MOCK_CONVERSATIONS));
@@ -53,7 +62,7 @@ const App: FC = () => {
       // Mock users for login demo
       const mockUsersArray: UserProfile[] = Object.values(MOCK_USERS);
       mockUsersArray.forEach(u => {
-        const userForStorage = { ...u, password: 'password123' };
+        const userForStorage = { ...u, password: 'password123', verified: true }; // Mock users are pre-verified
         localStorage.setItem(`fasta_user_${u.email}`, JSON.stringify(userForStorage));
       });
       localStorage.setItem('fasta_conversations_initialized', 'true');
@@ -180,6 +189,7 @@ const App: FC = () => {
     setTrainerToBook(null);
     setSelectedTrainerProfile(null);
     setSelectedConversationId(null);
+    setEmailForVerification(null);
   };
 
   const handleLoginSuccess = (userData: UserProfile, remember: boolean, navigate = true) => {
@@ -191,9 +201,13 @@ const App: FC = () => {
         localStorage.removeItem('fasta_conversations'); // Clear corrupted data
     }
     const userConvos = allConvos.filter((c: Conversation) => c.participants.some(p => p.id === userData.email));
+    
+    // Check for trainer-specific fields to determine role
+    const isTrainer = 'hourlyRate' in userData && 'specialties' in userData;
 
     const completeUserData: UserProfile = {
       ...userData,
+      role: isTrainer ? 'trainer' : 'client',
       photoUrl: userData.photoUrl || `https://picsum.photos/seed/${userData.username}/200/200`,
       completedSessions: userData.completedSessions || 0,
       earnedMedalIds: userData.earnedMedalIds || [],
@@ -215,50 +229,46 @@ const App: FC = () => {
     }
   };
   
-  const handleSignUpSuccess = (userData: UserProfile) => {
-     handleLoginSuccess(userData, true); // Default to remembering new sign-ups
+  const startVerificationProcess = (email: string) => {
+      const userAccountRaw = localStorage.getItem(`fasta_user_${email}`);
+      if (!userAccountRaw) {
+          console.error("Could not find user to verify.");
+          setView('login');
+          return;
+      }
+      const userAccount = JSON.parse(userAccountRaw);
+      const code = userAccount.verificationCode;
+      
+      addToast(`Verification code sent! For demo: ${code}`);
+
+      setEmailForVerification(email);
+      setView('verification');
   };
 
-  const handleTrainerSignUp = (trainerData: any) => {
-      // 1. Create the public Trainer profile object
-      const newTrainer: Trainer = {
-          id: trainers.length + 1,
-          name: trainerData.fullName,
-          email: trainerData.email,
-          photoUrl: trainerData.photoUrl,
-          specialties: trainerData.specialties,
-          hourlyRate: parseInt(trainerData.hourlyRate, 10),
-          location: trainerData.city,
-          isOnline: trainerData.trainingLocations.includes('Online'),
-          bio: trainerData.bio,
-          reviews: [],
-          coordinates: MOCK_TRAINERS.find(t => t.location === trainerData.city)?.coordinates || { lat: 32.0853, lng: 34.7818 }
-      };
-      setTrainers(prev => [...prev, newTrainer]);
-      
-      // 2. Create the UserProfile object for login
-      const newTrainerUserProfile: UserProfile = {
-        email: trainerData.email,
-        fullName: trainerData.fullName,
-        username: trainerData.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, ''),
-        photoUrl: trainerData.photoUrl,
-        completedSessions: 0,
-        earnedMedalIds: [],
-        conversations: [],
-        favoriteTrainerIds: [],
-      };
-      
-      // 3. Store the full user account with password
-      const userForStorage = {
-        ...newTrainerUserProfile,
-        password: trainerData.password,
-      };
-      localStorage.setItem(`fasta_user_${trainerData.email}`, JSON.stringify(userForStorage));
-      
-      // 4. Log the new trainer in and navigate to discovery
-      handleLoginSuccess(newTrainerUserProfile, true, true);
+  const handleAccountCreated = (email: string) => {
+     startVerificationProcess(email);
   };
+  
+  const handleRequireVerification = (email: string) => {
+      startVerificationProcess(email);
+  }
 
+  const handleVerificationSuccess = (email: string) => {
+      const userAccountKey = `fasta_user_${email}`;
+      const userAccountRaw = localStorage.getItem(userAccountKey);
+      if (!userAccountRaw) return;
+
+      const userAccount = JSON.parse(userAccountRaw);
+      userAccount.verified = true;
+      delete userAccount.verificationCode;
+      localStorage.setItem(userAccountKey, JSON.stringify(userAccount));
+      
+      const { password, ...userProfile } = userAccount;
+      
+      setEmailForVerification(null);
+      handleLoginSuccess(userProfile, true);
+  };
+  
 
   const handleInitiateBooking = (trainer: Trainer) => {
       setTrainerToBook(trainer);
@@ -447,12 +457,21 @@ const App: FC = () => {
         case 'signup-role-select':
              return <RoleSelection onSelectRole={(role) => setView(role === 'client' ? 'client-signup' : 'trainer-signup')} />;
         case 'client-signup':
-            return <SignUp onSignUpSuccess={handleSignUpSuccess} onNavigateToLogin={() => setView('login')} />;
+            return <SignUp onAccountCreated={handleAccountCreated} onNavigateToLogin={() => setView('login')} />;
         case 'trainer-signup':
-            return <TrainerSignUp onSignUpSuccess={handleTrainerSignUp} />;
+            return <TrainerSignUp onAccountCreated={handleAccountCreated} />;
         case 'login':
-            return <Login onLoginSuccess={handleLoginSuccess} onNavigateToSignUp={() => setView('signup-role-select')} />;
+            return <Login onLoginSuccess={handleLoginSuccess} onNavigateToSignUp={() => setView('signup-role-select')} onRequireVerification={handleRequireVerification} />;
+        case 'verification':
+            return <Verification 
+                        email={emailForVerification}
+                        onSuccess={handleVerificationSuccess}
+                        onResendCode={startVerificationProcess}
+                   />;
         case 'dashboard':
+            if (user?.role === 'trainer') {
+                return <TrainerDashboard user={user} conversations={userConversations} onNavigate={handleNavigate} />;
+            }
             return <Dashboard user={user} />;
         case 'messages':
             return user ? <MessagingCenter 
@@ -463,7 +482,7 @@ const App: FC = () => {
                                 selectedConversationId={selectedConversationId}
                                 trainers={trainers}
                                 onInitiateBooking={handleInitiateBooking}
-                           /> : <Login onLoginSuccess={handleLoginSuccess} onNavigateToSignUp={() => setView('signup-role-select')} />;
+                           /> : <Login onLoginSuccess={handleLoginSuccess} onNavigateToSignUp={() => setView('signup-role-select')} onRequireVerification={handleRequireVerification} />;
         case 'about':
             return <About />;
         case 'discovery':
@@ -514,6 +533,7 @@ const App: FC = () => {
       {newlyUnlockedMedal && (
           <MedalUnlockedModal medal={newlyUnlockedMedal} onClose={() => setNewlyUnlockedMedal(null)} />
       )}
+      {isDevMode && <DesignModeToggle />}
     </div>
   );
 };

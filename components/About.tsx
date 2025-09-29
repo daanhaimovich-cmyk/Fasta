@@ -1,17 +1,17 @@
 
 
-
 import React, { type FC } from 'react';
-import { TargetIcon, UsersIcon, BriefcaseIcon } from './IconComponents';
+import { TargetIcon, ClientGroupIcon, BriefcaseIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
 
 const FeatureCard: FC<{
   icon: React.ReactNode;
   title: string;
   children: React.ReactNode;
-}> = ({ icon, title, children }) => {
+  designId: string;
+}> = ({ icon, title, children, designId }) => {
   return (
-    <div className="bg-slate-800/50 p-6 rounded-lg border border-slate-700/50 text-center flex flex-col items-center">
+    <div data-design-id={designId} className="bg-slate-800/50 p-6 rounded-lg border border-slate-700/50 text-center flex flex-col items-center">
       <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
         {icon}
       </div>
@@ -26,18 +26,19 @@ const About: FC = () => {
   return (
     <div className="max-w-4xl mx-auto animate-fade-in-down">
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+        <h1 data-design-id="about-page-title" className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400">
             {t('about_title')}
           </span>
         </h1>
-        <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">
+        <p data-design-id="about-page-subtitle" className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">
           {t('about_subtitle')}
         </p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-8">
         <FeatureCard
+          designId="about-feature-card-mission"
           icon={<TargetIcon className="w-7 h-7" />}
           title={t('about_mission_title')}
         >
@@ -45,13 +46,15 @@ const About: FC = () => {
         </FeatureCard>
 
         <FeatureCard
-          icon={<UsersIcon className="w-7 h-7" />}
+          designId="about-feature-card-clients"
+          icon={<ClientGroupIcon className="w-7 h-7" />}
           title={t('about_clients_title')}
         >
           {t('about_clients_text')}
         </FeatureCard>
         
         <FeatureCard
+          designId="about-feature-card-trainers"
           icon={<BriefcaseIcon className="w-7 h-7" />}
           title={t('about_trainers_title')}
         >

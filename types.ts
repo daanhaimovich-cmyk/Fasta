@@ -60,6 +60,14 @@ export interface UserProfile {
     earnedMedalIds: string[];
     conversations: Conversation[];
     favoriteTrainerIds: number[];
+    role?: 'client' | 'trainer';
+    // Trainer-specific fields (optional)
+    specialties?: Specialty[];
+    hourlyRate?: number;
+    bio?: string;
+    experience?: number;
+    certifications?: string;
+    agendaLink?: string;
 }
 
 export interface Booking {

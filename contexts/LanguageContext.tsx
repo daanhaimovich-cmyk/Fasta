@@ -198,6 +198,15 @@ const enStrings: { [key: string]: string } = {
   "dashboard_medalsTitle": "Your Medals",
   "dashboard_unlockMedal": "Complete {milestone} sessions to unlock.",
 
+  "trainerDashboard_subtitle": "Here's your activity overview.",
+  "trainerDashboard_totalEarnings": "Total Earnings",
+  "trainerDashboard_completedSessions": "Completed Sessions",
+  "trainerDashboard_activeClients": "Active Clients",
+  "trainerDashboard_recentMessages": "Recent Messages",
+  "trainerDashboard_viewAllMessages": "View All",
+  "trainerDashboard_noMessages": "You have no new messages.",
+  "trainerDashboard_profileSnapshot": "Profile Snapshot",
+  
   "medalModal_title": "Medal Unlocked!",
   "medalModal_button": "Awesome!",
 
@@ -217,7 +226,16 @@ const enStrings: { [key: string]: string } = {
   "about_clients_title": "For Clients",
   "about_clients_text": "Finding the right trainer is the most crucial step in any fitness journey. FASTA empowers you to discover professionals based on their specialty, coaching style, and your specific objectives—not just their zip code. Whether you want to build muscle, master yoga, or run a marathon, your perfect match is here. Achieve your fitness goals, FASTA.",
   "about_trainers_title": "For Trainers",
-  "about_trainers_text": "We're also committed to empowering fitness professionals. FASTA is more than just a discovery platform; it's a comprehensive toolkit for trainers. We help you streamline your business by managing your finances, organizing your schedule, and amplifying your brand through effective advertisement. Focus on what you do best—coaching—and let us handle the rest."
+  "about_trainers_text": "We're also committed to empowering fitness professionals. FASTA is more than just a discovery platform; it's a comprehensive toolkit for trainers. We help you streamline your business by managing your finances, organizing your schedule, and amplifying your brand through effective advertisement. Focus on what you do best—coaching—and let us handle the rest.",
+
+  "verification_title": "Check your email",
+  "verification_subtitle": "We've sent a 6-digit verification code to",
+  "verification_codeLabel": "Verification Code",
+  "verification_error_invalid": "Invalid verification code. Please try again.",
+  "verification_error_noAccount": "Could not find user account. Please sign up again.",
+  "verification_button": "Verify Account",
+  "verification_resend_prompt": "Didn't receive the email?",
+  "verification_resend_button": "Resend Code"
 };
 
 

@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, type FC } from 'react';
 import { CITIES } from '../constants';
 import { Specialty, type Trainer } from '../types';
@@ -7,10 +6,10 @@ import { useTranslation } from '../contexts/LanguageContext';
 import { View } from '../App';
 
 interface TrainerSignUpProps {
-    onSignUpSuccess: (trainerData: any) => void;
+    onAccountCreated: (email: string) => void;
 }
 
-const TrainerSignUp: FC<TrainerSignUpProps> = ({ onSignUpSuccess }) => {
+const TrainerSignUp: FC<TrainerSignUpProps> = ({ onAccountCreated }) => {
     const { t } = useTranslation();
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
@@ -97,11 +96,31 @@ const TrainerSignUp: FC<TrainerSignUpProps> = ({ onSignUpSuccess }) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const fullTrainerData = {
-            ...formData,
+         // Create the UserProfile object for login
+        const newTrainerUserProfile = {
+            email: formData.email,
+            fullName: formData.fullName,
+            username: formData.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, ''),
             photoUrl: formData.profilePicturePreview || `https://picsum.photos/seed/${formData.fullName.replace(/\s/g, '')}/400/400`,
+            completedSessions: 0,
+            earnedMedalIds: [],
+            conversations: [],
+            favoriteTrainerIds: [],
         };
-        onSignUpSuccess(fullTrainerData);
+
+        const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+        
+        // Store the full user account with password
+        const userForStorage = {
+            ...newTrainerUserProfile,
+            ...formData, // include all trainer-specific details
+            password: formData.password,
+            verified: false,
+            verificationCode: verificationCode,
+        };
+        localStorage.setItem(`fasta_user_${formData.email}`, JSON.stringify(userForStorage));
+
+        onAccountCreated(formData.email);
     };
 
     const ProgressIndicator = () => (
@@ -271,10 +290,7 @@ const TrainerSignUp: FC<TrainerSignUpProps> = ({ onSignUpSuccess }) => {
                         
                         <div>
                             <label htmlFor="agendaLink" className="block text-sm font-medium text-slate-300 mb-2">{t('trainerSignup_agendaLabel')}</label>
-                            <div className="relative">
-                                <LinkIcon className="absolute start-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                                <input type="url" id="agendaLink" name="agendaLink" value={formData.agendaLink} onChange={handleInputChange} className="w-full bg-slate-700 border border-slate-600 rounded-md py-2.5 ps-10 pe-4 text-white placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder={t('trainerSignup_agendaPlaceholder')} />
-                            </div>
+                            <input type="url" id="agendaLink" name="agendaLink" value={formData.agendaLink} onChange={handleInputChange} className="w-full bg-slate-700 border border-slate-600 rounded-md py-2.5 px-4 text-white placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" placeholder={t('trainerSignup_agendaPlaceholder')} />
                         </div>
 
                          <div className="flex items-center justify-between pt-4">

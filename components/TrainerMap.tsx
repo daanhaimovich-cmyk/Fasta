@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, type FC } from 'react';
 import type { Trainer } from '../types';
 
@@ -76,7 +75,7 @@ const TrainerMap: FC<{ trainers: Trainer[] }> = ({ trainers }) => {
 
   }, [trainers]);
 
-  return <div ref={mapContainerRef} className="h-[75vh] w-full rounded-lg z-0" />;
+  return <div data-design-id="trainer-map-container" ref={mapContainerRef} className="h-[75vh] w-full rounded-lg z-0" />;
 };
 
 export default TrainerMap;

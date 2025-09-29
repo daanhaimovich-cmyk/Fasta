@@ -1,5 +1,3 @@
-
-
 import React, { useState, type FC } from 'react';
 import { EyeIcon, EyeOffIcon } from './IconComponents';
 import type { UserProfile } from '../types';
@@ -8,9 +6,10 @@ import { useTranslation } from '../contexts/LanguageContext';
 interface LoginProps {
     onLoginSuccess: (user: UserProfile, remember: boolean) => void;
     onNavigateToSignUp: () => void;
+    onRequireVerification: (email: string) => void;
 }
 
-const Login: FC<LoginProps> = ({ onLoginSuccess, onNavigateToSignUp }) => {
+const Login: FC<LoginProps> = ({ onLoginSuccess, onNavigateToSignUp, onRequireVerification }) => {
     const { t } = useTranslation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,20 +21,16 @@ const Login: FC<LoginProps> = ({ onLoginSuccess, onNavigateToSignUp }) => {
         e.preventDefault();
         setError('');
 
-        const storedUser = localStorage.getItem(`fasta_user_${email}`);
-        if (storedUser) {
-            const user = JSON.parse(storedUser);
+        const storedUserRaw = localStorage.getItem(`fasta_user_${email}`);
+        if (storedUserRaw) {
+            const user = JSON.parse(storedUserRaw);
             if (user.password === password) {
-                onLoginSuccess({ 
-                    email: user.email, 
-                    fullName: user.fullName, 
-                    username: user.username,
-                    photoUrl: user.photoUrl || `https://picsum.photos/seed/${user.username}/200/200`,
-                    completedSessions: user.completedSessions || 0,
-                    earnedMedalIds: user.earnedMedalIds || [],
-                    conversations: user.conversations || [],
-                    favoriteTrainerIds: user.favoriteTrainerIds || [],
-                }, rememberMe);
+                if (user.verified === false) {
+                    onRequireVerification(email);
+                    return;
+                }
+                const { password: P, verified, verificationCode, ...userProfile } = user;
+                onLoginSuccess(userProfile, rememberMe);
                 return;
             }
         }
@@ -45,12 +40,13 @@ const Login: FC<LoginProps> = ({ onLoginSuccess, onNavigateToSignUp }) => {
 
     return (
         <div className="max-w-md mx-auto bg-slate-800/50 p-8 rounded-lg shadow-2xl border border-slate-700/50 animate-fade-in-down">
-            <h2 className="text-3xl font-bold text-white mb-2 text-center">{t('login_welcomeBack')}</h2>
-            <p className="text-slate-400 mb-8 text-center">{t('login_subtitle')}</p>
+            <h2 data-design-id="login-title" className="text-3xl font-bold text-white mb-2 text-center">{t('login_welcomeBack')}</h2>
+            <p data-design-id="login-subtitle" className="text-slate-400 mb-8 text-center">{t('login_subtitle')}</p>
             <form onSubmit={handleLogin} className="space-y-6">
                 <div>
                     <label htmlFor="email-login" className="block text-sm font-medium text-slate-300 mb-2">{t('login_emailLabel')}</label>
                     <input 
+                        data-design-id="login-email-input"
                         type="email" 
                         id="email-login" 
                         value={email} 
@@ -63,6 +59,7 @@ const Login: FC<LoginProps> = ({ onLoginSuccess, onNavigateToSignUp }) => {
                     <label htmlFor="password-login" className="block text-sm font-medium text-slate-300 mb-2">{t('login_passwordLabel')}</label>
                     <div className="relative">
                         <input 
+                            data-design-id="login-password-input"
                             type={passwordVisible ? "text" : "password"} 
                             id="password-login" 
                             value={password} 
@@ -77,7 +74,7 @@ const Login: FC<LoginProps> = ({ onLoginSuccess, onNavigateToSignUp }) => {
                 </div>
 
                 <div className="flex items-center justify-between">
-                    <label className="flex items-center cursor-pointer">
+                    <label data-design-id="login-remember-me-checkbox" className="flex items-center cursor-pointer">
                         <input
                         type="checkbox"
                         checked={rememberMe}
@@ -92,13 +89,14 @@ const Login: FC<LoginProps> = ({ onLoginSuccess, onNavigateToSignUp }) => {
                 {error && <p className="text-red-400 text-sm text-center -my-2">{error}</p>}
 
                 <button 
+                    data-design-id="login-submit-button"
                     type="submit"
                     className="w-full bg-emerald-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-emerald-600 transition-colors duration-200 shadow-md shadow-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-emerald-500">
                     {t('login_button')}
                 </button>
                 <p className="text-sm text-slate-400 text-center pt-4">
                     {t('login_noAccount')}{' '}
-                    <button type="button" onClick={onNavigateToSignUp} className="font-semibold text-emerald-400 hover:text-emerald-300">
+                    <button data-design-id="login-navigate-to-signup-link" type="button" onClick={onNavigateToSignUp} className="font-semibold text-emerald-400 hover:text-emerald-300">
                         {t('login_signUpLink')}
                     </button>
                 </p>

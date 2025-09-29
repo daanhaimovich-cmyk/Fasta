@@ -1,5 +1,7 @@
 
 
+
+
 import React, { useState, useMemo, type FC } from 'react';
 import type { Trainer } from '../types';
 import { XIcon } from './IconComponents';
@@ -67,28 +69,30 @@ const BookingModal: FC<BookingModalProps> = ({ trainer, onClose, onConfirm }) =>
       role="dialog"
       aria-modal="true"
       aria-labelledby="booking-modal-title"
+      data-design-id="booking-modal-overlay"
     >
       <div 
         className="bg-slate-800 rounded-2xl shadow-2xl w-full max-w-lg mx-auto text-slate-200 border border-slate-700 max-h-[90vh] overflow-y-auto flex flex-col"
         onClick={e => e.stopPropagation()}
+        data-design-id="booking-modal-container"
       >
         <div className="p-6">
             {/* Header */}
             <div className="flex items-center justify-between pb-4 border-b border-slate-700">
-                <div className="flex items-center gap-4">
+                <div data-design-id="booking-modal-header" className="flex items-center gap-4">
                     <img src={trainer.photoUrl} alt={trainer.name} className="w-16 h-16 rounded-full object-cover border-2 border-emerald-500"/>
                     <div>
                         <p className="text-slate-400 text-sm">{t('bookingModal_title')}</p>
                         <h2 id="booking-modal-title" className="text-2xl font-bold text-white">{trainer.name}</h2>
                     </div>
                 </div>
-                <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors" aria-label={t('common_close')} title={t('common_close')}>
+                <button data-design-id="booking-modal-close-button" onClick={onClose} className="text-slate-400 hover:text-white transition-colors" aria-label={t('common_close')} title={t('common_close')}>
                     <XIcon />
                 </button>
             </div>
 
             {/* Calendar */}
-            <div className="mt-6">
+            <div className="mt-6" data-design-id="booking-modal-calendar">
                 <h3 className="font-semibold text-lg text-white mb-3">{t('bookingModal_selectDate')}</h3>
                 <div className="grid grid-cols-7 gap-1 text-center text-sm">
                     {weekDays.map(day => (
@@ -105,6 +109,7 @@ const BookingModal: FC<BookingModalProps> = ({ trainer, onClose, onConfirm }) =>
                             <div key={index} className="py-1 flex justify-center">
                                 {day ? (
                                     <button
+                                        data-design-id={`booking-modal-date-${day.toISOString().split('T')[0]}`}
                                         onClick={() => handleDateSelect(day)}
                                         disabled={isPast}
                                         className={`w-10 h-10 rounded-full transition-colors duration-200 flex items-center justify-center
@@ -122,12 +127,13 @@ const BookingModal: FC<BookingModalProps> = ({ trainer, onClose, onConfirm }) =>
             </div>
 
             {/* Time Slots */}
-            <div className="mt-6">
+            <div className="mt-6" data-design-id="booking-modal-time-slots">
                 <h3 className="font-semibold text-lg text-white mb-3">{t('bookingModal_selectTime')}</h3>
                 <div className="grid grid-cols-4 gap-3">
                     {TIME_SLOTS.map(time => (
                         <button
                             key={time}
+                            data-design-id={`booking-modal-time-slot-${time}`}
                             onClick={() => setSelectedTime(time)}
                             className={`px-4 py-2 rounded-lg transition-colors duration-200 text-sm font-semibold
                                 ${selectedTime === time ? 'bg-emerald-500 text-white' : 'bg-slate-700 text-slate-200 hover:bg-slate-600'}`}
@@ -142,6 +148,7 @@ const BookingModal: FC<BookingModalProps> = ({ trainer, onClose, onConfirm }) =>
             <div className="mt-6">
                  <h3 className="font-semibold text-lg text-white mb-3">{t('bookingModal_messageLabel')}</h3>
                  <textarea
+                    data-design-id="booking-modal-message-input"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder={t('bookingModal_messagePlaceholder')}
@@ -154,6 +161,7 @@ const BookingModal: FC<BookingModalProps> = ({ trainer, onClose, onConfirm }) =>
         {/* Footer */}
         <div className="p-6 bg-slate-900/50 mt-auto rounded-b-2xl border-t border-slate-700">
              <button
+                data-design-id="booking-modal-submit-button"
                 onClick={handleConfirmClick}
                 disabled={!selectedDate || !selectedTime}
                 className="w-full bg-emerald-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-emerald-600 transition-colors duration-200 shadow-md shadow-emerald-500/20 disabled:bg-slate-600 disabled:cursor-not-allowed disabled:shadow-none"
