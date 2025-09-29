@@ -6,11 +6,18 @@ interface LanguageContextType {
 }
 
 const enStrings: { [key: string]: string } = {
+  "common_close": "Close",
+  "common_collapse": "Collapse",
+  "common_expand": "Expand",
+  "common_hidePassword": "Hide password",
+  "common_showPassword": "Show password",
+
   "header_browseTrainers": "Browse Trainers",
   "header_forTrainers": "For Trainers",
   "header_about": "About",
   "header_dashboard": "Dashboard",
   "header_messages": "Messages",
+  "header_userMenu": "User Menu",
   "header_welcome": "Welcome, ",
   "header_logout": "Logout",
   "header_login": "Log In",
@@ -25,6 +32,7 @@ const enStrings: { [key: string]: string } = {
 
   "filters_specialty": "Specialty",
   "filters_rating": "Rating",
+  "filters_rateAtLeast": "Rate at least {count} star(s)",
   "filters_maxHourlyRate": "Max Hourly Rate",
   "filters_location": "Location",
   "filters_locationPlaceholder": "e.g. Tel Aviv",
@@ -75,9 +83,9 @@ const enStrings: { [key: string]: string } = {
   "signup_passwordError": "Password must be at least 6 characters.",
   "signup_usernameError_length": "Username must be at least 3 characters.",
   "signup_usernameError_format": "Username can only contain letters, numbers, and underscores.",
-
   "signup_step2_title": "Add a Profile Picture",
   "signup_step2_subtitle": "This helps trainers get to know you.",
+  "signup_uploadPicture": "Upload Picture",
   "signup_back": "Back",
   "signup_skipContinue": "Skip & Continue",
   "signup_step3_title": "Tell Us About Yourself",
@@ -113,6 +121,7 @@ const enStrings: { [key: string]: string } = {
   "trainerSignup_subtitle": "Join our platform and connect with clients.",
   "trainerSignup_step2_title": "Add Your Profile Picture",
   "trainerSignup_step2_subtitle": "A professional photo helps you attract clients.",
+  "trainerSignup_uploadPicture": "Upload Profile Picture",
   "trainerSignup_step3_title": "Build Your Trainer Profile",
   "trainerSignup_step3_subtitle": "Showcase your expertise and skills.",
   "trainerSignup_experienceLabel": "Years of Experience",
@@ -178,6 +187,7 @@ const enStrings: { [key: string]: string } = {
   "profileModal_reviewsCount": "({count} reviews)",
   "profileModal_leaveReview": "Leave a review",
   "profileModal_yourRating": "Your Rating:",
+  "profileModal_rate": "Rate {count} star(s)",
   "profileModal_commentPlaceholder": "Share your experience...",
   "profileModal_submitReview": "Submit Review",
   "profileModal_noReviews": "Be the first to leave a review for {name}!",
@@ -196,6 +206,7 @@ const enStrings: { [key: string]: string } = {
   "messages_you": "You: ",
   "messages_bookSession": "Book Session",
   "messages_placeholder": "Type a message...",
+  "messages_send": "Send",
   "messages_selectConversation": "Select a conversation to start messaging.",
   "messages_system_bookingConfirmed": "Session confirmed for {date} at {time}.",
 

@@ -167,7 +167,7 @@ const SignUp: FC<SignUpProps> = ({ onSignUpSuccess, onNavigateToLogin }) => {
                                 <input type={passwordVisible ? "text" : "password"} id="password" name="password" value={formData.password} onChange={handleInputChange} required 
                                     className={`w-full bg-slate-700 border rounded-md py-2.5 px-4 text-white placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${errors.password ? 'border-red-500 ring-red-500/50 animate-shake' : 'border-slate-600'}`} 
                                     placeholder={t('login_passwordPlaceholder')} />
-                                <button type="button" onClick={() => setPasswordVisible(!passwordVisible)} className="absolute inset-y-0 end-0 pe-3 flex items-center text-slate-400 hover:text-white">
+                                <button type="button" onClick={() => setPasswordVisible(!passwordVisible)} className="absolute inset-y-0 end-0 pe-3 flex items-center text-slate-400 hover:text-white" title={passwordVisible ? t('common_hidePassword') : t('common_showPassword')}>
                                     {passwordVisible ? <EyeOffIcon /> : <EyeIcon />}
                                 </button>
                             </div>
@@ -215,12 +215,14 @@ const SignUp: FC<SignUpProps> = ({ onSignUpSuccess, onNavigateToLogin }) => {
                                         <UserCircleIcon className="w-24 h-24 text-slate-500" />
                                     </div>
                                 )}
-                                <div 
-                                    className="absolute bottom-2 end-2 bg-emerald-500 p-2 rounded-full text-white cursor-pointer group-hover:scale-110 transition-transform"
+                                <button
+                                    type="button"
+                                    title={t('signup_uploadPicture')}
+                                    className="absolute bottom-2 end-2 bg-emerald-500 p-2 rounded-full text-white cursor-pointer group-hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-emerald-500"
                                     onClick={() => fileInputRef.current?.click()}
                                 >
                                     <CameraIcon className="w-6 h-6" />
-                                </div>
+                                </button>
                             </div>
                         </div>
 

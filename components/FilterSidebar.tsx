@@ -1,5 +1,7 @@
 
 
+
+
 import React, { useState, type FC } from 'react';
 import type { Filters, Specialty } from '../types';
 import { StarIcon, ChevronUpIcon, ChevronDownIcon, LocationMarkerIcon } from './IconComponents';
@@ -13,10 +15,15 @@ interface FilterSidebarProps {
 
 const FilterSection: FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(true);
+  const { t } = useTranslation();
 
   return (
     <div className="border-b border-slate-700 py-4">
-      <button onClick={() => setIsOpen(!isOpen)} className="w-full flex justify-between items-center text-start">
+      <button 
+        onClick={() => setIsOpen(!isOpen)} 
+        className="w-full flex justify-between items-center text-start"
+        title={isOpen ? t('common_collapse') : t('common_expand')}
+      >
         <h3 className="text-lg font-semibold text-slate-100">{title}</h3>
         {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
       </button>
@@ -67,7 +74,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ filters, setFilters, availableS
       <FilterSection title={t('filters_rating')}>
          <div className="flex space-x-1">
           {[1, 2, 3, 4, 5].map(star => (
-            <button key={star} onClick={() => handleRatingChange(star)} className="focus:outline-none">
+            <button key={star} onClick={() => handleRatingChange(star)} className="focus:outline-none" title={t('filters_rateAtLeast', { count: star })}>
               <StarIcon filled={star <= filters.minRating} className="w-6 h-6"/>
             </button>
           ))}

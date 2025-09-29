@@ -2,6 +2,7 @@
 
 
 
+
 import React, { useState, useEffect, useRef, type FC } from 'react';
 import type { UserProfile } from '../types';
 import { View } from '../App';
@@ -70,7 +71,7 @@ const Header: FC<HeaderProps> = ({ onNavigate, user, onLogout, unreadMessagesCou
         <div className="flex items-center space-x-4">
             {user ? (
                 <>
-                    <button onClick={handleMessagesClick} className="relative text-slate-400 hover:text-white transition-colors" aria-label={t('header_messages')}>
+                    <button onClick={handleMessagesClick} className="relative text-slate-400 hover:text-white transition-colors" aria-label={t('header_messages')} title={t('header_messages')}>
                         <ChatBubbleIcon className="w-6 h-6" />
                         {unreadMessagesCount > 0 && (
                             <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
@@ -83,6 +84,7 @@ const Header: FC<HeaderProps> = ({ onNavigate, user, onLogout, unreadMessagesCou
                         <button 
                             onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                             className="flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-slate-900 rounded-full"
+                            title={t('header_userMenu')}
                         >
                             <img src={user.photoUrl} alt="User avatar" className="w-9 h-9 rounded-full object-cover border-2 border-slate-600 group-hover:border-emerald-500 transition"/>
                             <ChevronDownIcon className={`w-4 h-4 text-slate-400 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
@@ -110,7 +112,7 @@ const Header: FC<HeaderProps> = ({ onNavigate, user, onLogout, unreadMessagesCou
                 </>
             ) : (
                 <>
-                    <button onClick={handleMessagesClick} className="relative text-slate-400 hover:text-white transition-colors" aria-label={t('header_messages')}>
+                    <button onClick={handleMessagesClick} className="relative text-slate-400 hover:text-white transition-colors" aria-label={t('header_messages')} title={t('header_messages')}>
                       <ChatBubbleIcon className="w-6 h-6" />
                     </button>
                     <button onClick={() => onNavigate('login')} className="text-sm font-semibold text-slate-200 hover:text-white transition-colors">{t('header_login')}</button>

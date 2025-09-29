@@ -1,7 +1,5 @@
 
 
-
-
 import React, { useState, type FC } from 'react';
 import type { Trainer, UserProfile, Review } from '../types';
 import { XIcon, StarIcon, ChatBubbleIcon } from './IconComponents';
@@ -65,7 +63,7 @@ const TrainerProfileModal: FC<TrainerProfileModalProps> = ({ trainer, onClose, c
               </div>
             </div>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors" aria-label="Close modal">
+          <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors" aria-label={t('common_close')} title={t('common_close')}>
             <XIcon />
           </button>
         </div>
@@ -104,6 +102,7 @@ const TrainerProfileModal: FC<TrainerProfileModalProps> = ({ trainer, onClose, c
                         onMouseLeave={() => setHoverRating(0)}
                         onClick={() => setNewRating(star)}
                         className="focus:outline-none"
+                        title={t('profileModal_rate', { count: star })}
                       >
                         <StarIcon
                           filled={(hoverRating || newRating) >= star}

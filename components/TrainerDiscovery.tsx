@@ -1,6 +1,5 @@
 
 
-
 import React, { useState, useEffect, type FC } from 'react';
 import { Specialty } from '../types';
 import type { Trainer, Filters } from '../types';
@@ -67,7 +66,7 @@ const TrainerDiscovery: FC<TrainerDiscoveryProps> = ({
               <div className="absolute top-0 start-0 bottom-0 w-4/5 max-w-sm bg-slate-900 p-6 overflow-y-auto shadow-2xl border-e border-slate-700" onClick={e => e.stopPropagation()}>
                   <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-bold text-white">{t('discovery_filters')}</h2>
-                    <button onClick={() => setIsFilterSidebarOpen(false)} className="text-slate-400 hover:text-white">
+                    <button onClick={() => setIsFilterSidebarOpen(false)} className="text-slate-400 hover:text-white" title={t('common_close')}>
                        <XIcon />
                     </button>
                   </div>
@@ -97,7 +96,7 @@ const TrainerDiscovery: FC<TrainerDiscoveryProps> = ({
         <div className="flex-grow min-w-0">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center gap-4">
-                <button onClick={() => setIsFilterSidebarOpen(true)} className="lg:hidden flex items-center gap-2 border border-slate-700 px-4 py-2 rounded-lg font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                <button onClick={() => setIsFilterSidebarOpen(true)} title={t('discovery_filters')} className="lg:hidden flex items-center gap-2 border border-slate-700 px-4 py-2 rounded-lg font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
                     <FilterIcon /> 
                     <span className="hidden sm:inline">{t('discovery_filters')}</span>
                 </button>
@@ -110,6 +109,7 @@ const TrainerDiscovery: FC<TrainerDiscoveryProps> = ({
                 onClick={() => setViewMode('grid')}
                 className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${viewMode === 'grid' ? 'bg-emerald-500 text-white' : 'text-slate-400 hover:bg-slate-800'}`}
                 aria-label={t('discovery_gridView')}
+                title={t('discovery_gridView')}
               >
                 <GridViewIcon className="w-5 h-5" />
               </button>
@@ -117,6 +117,7 @@ const TrainerDiscovery: FC<TrainerDiscoveryProps> = ({
                 onClick={() => setViewMode('map')}
                 className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${viewMode === 'map' ? 'bg-emerald-500 text-white' : 'text-slate-400 hover:bg-slate-800'}`}
                 aria-label={t('discovery_mapView')}
+                title={t('discovery_mapView')}
               >
                 <MapViewIcon className="w-5 h-5" />
               </button>

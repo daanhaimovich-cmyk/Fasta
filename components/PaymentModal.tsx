@@ -139,7 +139,7 @@ const PaymentModal: FC<PaymentModalProps> = ({ trainer, bookingDetails, onClose,
               <h2 id="payment-modal-title" className="text-2xl font-bold text-white">{t('paymentModal_title')}</h2>
               <p className="text-slate-400 text-sm">{t('paymentModal_subtitle', { name: trainer.name })}</p>
             </div>
-            <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors" aria-label="Close modal">
+            <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors" aria-label={t('common_close')} title={t('common_close')}>
               <XIcon />
             </button>
           </div>

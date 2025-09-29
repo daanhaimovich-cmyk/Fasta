@@ -1,7 +1,5 @@
 
 
-
-
 import React, { useState, useEffect, useRef, type FC } from 'react';
 import type { Conversation, UserProfile, Trainer } from '../types';
 import { SendIcon } from './IconComponents';
@@ -157,7 +155,7 @@ const MessagingCenter: FC<MessagingCenterProps> = ({
                                 placeholder={t('messages_placeholder')}
                                 className="w-full bg-slate-700 border border-slate-600 rounded-full py-2.5 px-5 text-white placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
                             />
-                            <button type="submit" className="bg-emerald-500 text-white p-3 rounded-full hover:bg-emerald-600 transition-colors disabled:bg-slate-600 disabled:cursor-not-allowed" disabled={!newMessage.trim()}>
+                            <button type="submit" title={t('messages_send')} className="bg-emerald-500 text-white p-3 rounded-full hover:bg-emerald-600 transition-colors disabled:bg-slate-600 disabled:cursor-not-allowed" disabled={!newMessage.trim()}>
                                 <SendIcon />
                             </button>
                         </form>

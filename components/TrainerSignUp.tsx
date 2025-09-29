@@ -1,6 +1,4 @@
 
-
-
 import React, { useState, useRef, type FC } from 'react';
 import { CITIES } from '../constants';
 import { Specialty, type Trainer } from '../types';
@@ -155,7 +153,7 @@ const TrainerSignUp: FC<TrainerSignUpProps> = ({ onSignUpSuccess }) => {
                                 <input type={passwordVisible ? "text" : "password"} id="password" name="password" value={formData.password} onChange={handleInputChange} required 
                                     className={`w-full bg-slate-700 border rounded-md py-2.5 px-4 text-white placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${errors.password ? 'border-red-500 ring-red-500/50 animate-shake' : 'border-slate-600'}`} 
                                     placeholder={t('login_passwordPlaceholder')} />
-                                <button type="button" onClick={() => setPasswordVisible(!passwordVisible)} className="absolute inset-y-0 end-0 pe-3 flex items-center text-slate-400 hover:text-white">
+                                <button type="button" onClick={() => setPasswordVisible(!passwordVisible)} className="absolute inset-y-0 end-0 pe-3 flex items-center text-slate-400 hover:text-white" title={passwordVisible ? t('common_hidePassword') : t('common_showPassword')}>
                                     {passwordVisible ? <EyeOffIcon /> : <EyeIcon />}
                                 </button>
                             </div>
@@ -183,9 +181,14 @@ const TrainerSignUp: FC<TrainerSignUpProps> = ({ onSignUpSuccess }) => {
                                         <UserCircleIcon className="w-24 h-24 text-slate-500" />
                                     </div>
                                 )}
-                                <div className="absolute bottom-2 end-2 bg-emerald-500 p-2 rounded-full text-white cursor-pointer group-hover:scale-110 transition-transform" onClick={() => fileInputRef.current?.click()}>
+                                <button
+                                    type="button"
+                                    title={t('trainerSignup_uploadPicture')}
+                                    className="absolute bottom-2 end-2 bg-emerald-500 p-2 rounded-full text-white cursor-pointer group-hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-emerald-500"
+                                    onClick={() => fileInputRef.current?.click()}
+                                >
                                     <CameraIcon className="w-6 h-6" />
-                                </div>
+                                </button>
                             </div>
                         </div>
 
@@ -278,7 +281,7 @@ const TrainerSignUp: FC<TrainerSignUpProps> = ({ onSignUpSuccess }) => {
                              <button type="button" onClick={prevStep} className="text-slate-300 font-semibold py-3 px-4 rounded-lg hover:bg-slate-700 transition-colors duration-200">
                                 {t('signup_back')}
                             </button>
-                            <button type="submit" className="bg-emerald-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-emerald-600 transition-colors duration-200 shadow-md shadow-emerald-500/20">
+                            <button type="submit" className="bg-emerald-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-emerald-600 transition-colors duration-200 shadow-md shadow-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-emerald-500">
                                 {t('trainerSignup_submitButton')}
                             </button>
                         </div>
@@ -289,4 +292,5 @@ const TrainerSignUp: FC<TrainerSignUpProps> = ({ onSignUpSuccess }) => {
     );
 };
 
+// FIX: Add missing default export
 export default TrainerSignUp;

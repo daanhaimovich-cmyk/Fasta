@@ -70,7 +70,7 @@ const Login: FC<LoginProps> = ({ onLoginSuccess, onNavigateToSignUp }) => {
                             required 
                             className={`w-full bg-slate-700 border rounded-md py-2.5 px-4 text-white placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition ${error ? 'border-red-500 animate-shake' : 'border-slate-600'}`}
                             placeholder={t('login_passwordPlaceholder')} />
-                        <button type="button" onClick={() => setPasswordVisible(!passwordVisible)} className="absolute inset-y-0 end-0 pe-3 flex items-center text-slate-400 hover:text-white">
+                        <button type="button" onClick={() => setPasswordVisible(!passwordVisible)} className="absolute inset-y-0 end-0 pe-3 flex items-center text-slate-400 hover:text-white" title={passwordVisible ? t('common_hidePassword') : t('common_showPassword')}>
                             {passwordVisible ? <EyeOffIcon /> : <EyeIcon />}
                         </button>
                     </div>

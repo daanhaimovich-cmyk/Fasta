@@ -82,7 +82,7 @@ const BookingModal: FC<BookingModalProps> = ({ trainer, onClose, onConfirm }) =>
                         <h2 id="booking-modal-title" className="text-2xl font-bold text-white">{trainer.name}</h2>
                     </div>
                 </div>
-                <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors" aria-label="Close modal">
+                <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors" aria-label={t('common_close')} title={t('common_close')}>
                     <XIcon />
                 </button>
             </div>
