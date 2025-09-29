@@ -1,19 +1,28 @@
-
-
 import React, { useState, type FC } from 'react';
 import type { Trainer, UserProfile, Review } from '../types';
-import { XIcon, StarIcon, ChatBubbleIcon } from './IconComponents';
+import { XIcon, StarIcon, ChatBubbleIcon, ShareIcon, CalendarDaysIcon } from './IconComponents';
 import { useTranslation } from '../contexts/LanguageContext';
+import { useToast } from '../contexts/ToastContext';
 
 interface TrainerProfileModalProps {
   trainer: Trainer;
   onClose: () => void;
   currentUser: UserProfile | null;
   onReviewSubmit: (trainerId: number, reviewData: { rating: number; comment: string }) => void;
+  onMessageTrainer: (trainer: Trainer) => void;
+  onBookSession: (trainer: Trainer) => void;
 }
 
-const TrainerProfileModal: FC<TrainerProfileModalProps> = ({ trainer, onClose, currentUser, onReviewSubmit }) => {
+const TrainerProfileModal: FC<TrainerProfileModalProps> = ({ 
+  trainer, 
+  onClose, 
+  currentUser, 
+  onReviewSubmit,
+  onMessageTrainer,
+  onBookSession,
+}) => {
   const { t } = useTranslation();
+  const { addToast } = useToast();
   const [newRating, setNewRating] = useState(0);
   const [newComment, setNewComment] = useState('');
   const [hoverRating, setHoverRating] = useState(0);
@@ -22,6 +31,42 @@ const TrainerProfileModal: FC<TrainerProfileModalProps> = ({ trainer, onClose, c
   const avgRating = trainer.reviews.length > 0
     ? trainer.reviews.reduce((acc, review) => acc + review.rating, 0) / trainer.reviews.length
     : 0;
+    
+  const handleShare = async () => {
+    const shareUrl = `${window.location.origin}${window.location.pathname}?trainerId=${trainer.id}`;
+    const shareData = {
+        title: `Check out ${trainer.name} on FASTA`,
+        text: `I found this great trainer, ${trainer.name}, on FASTA. Check out their profile!`,
+        url: shareUrl,
+    };
+
+    if (navigator.share) {
+        try {
+            await navigator.share(shareData);
+        } catch (err) {
+            console.error('Error sharing:', err);
+        }
+    } else {
+        // Fallback for desktop browsers
+        navigator.clipboard.writeText(shareUrl).then(() => {
+            addToast("Profile link copied to clipboard!");
+        }).catch(err => {
+            console.error('Failed to copy link:', err);
+            addToast("Failed to copy link.");
+        });
+    }
+  };
+
+  const handleMessageClick = () => {
+      onClose(); // Close this modal first
+      onMessageTrainer(trainer);
+  };
+  
+  const handleBookClick = () => {
+      if (!currentUser) return;
+      onClose(); // Close this modal first
+      onBookSession(trainer);
+  }
 
   const handleReviewSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,27 +90,52 @@ const TrainerProfileModal: FC<TrainerProfileModalProps> = ({ trainer, onClose, c
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-6 border-b border-slate-700 flex items-start justify-between sticky top-0 bg-slate-800 rounded-t-2xl">
-          <div className="flex items-center gap-5">
-            <img src={trainer.photoUrl} alt={trainer.name} className="w-24 h-24 rounded-full object-cover border-4 border-emerald-500" />
-            <div>
-              <h2 id="profile-modal-title" className="text-3xl font-bold text-white">{trainer.name}</h2>
-              <div className="flex items-center text-slate-400 mt-1 space-x-4 text-sm">
-                <span>{trainer.location}</span>
-                {trainer.isOnline && <span className="text-emerald-400 font-semibold">{t('trainerCard_online')}</span>}
-              </div>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {trainer.specialties.map(spec => (
-                  <span key={spec} className="px-2.5 py-1 text-xs font-semibold bg-emerald-500/20 text-emerald-300 rounded-full">
-                    {t(`specialty_${spec}`)}
-                  </span>
-                ))}
+        <div className="p-6 border-b border-slate-700 flex flex-col items-start justify-between sticky top-0 bg-slate-800 rounded-t-2xl">
+          <div className="flex items-start justify-between w-full">
+            <div className="flex items-center gap-5">
+              <img src={trainer.photoUrl} alt={trainer.name} className="w-24 h-24 rounded-full object-cover border-4 border-emerald-500" />
+              <div>
+                <h2 id="profile-modal-title" className="text-3xl font-bold text-white">{trainer.name}</h2>
+                <div className="flex items-center text-slate-400 mt-1 space-x-4 text-sm">
+                  <span>{trainer.location}</span>
+                  {trainer.isOnline && <span className="text-emerald-400 font-semibold">{t('trainerCard_online')}</span>}
+                </div>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {trainer.specialties.map(spec => (
+                    <span key={spec} className="px-2.5 py-1 text-xs font-semibold bg-emerald-500/20 text-emerald-300 rounded-full">
+                      {t(`specialty_${spec}`)}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
+            <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors" aria-label={t('common_close')} title={t('common_close')}>
+              <XIcon />
+            </button>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors" aria-label={t('common_close')} title={t('common_close')}>
-            <XIcon />
-          </button>
+           {/* Action Buttons */}
+          <div className="mt-6 flex flex-col sm:flex-row gap-3 w-full">
+              <button 
+                  onClick={handleMessageClick} 
+                  disabled={!currentUser}
+                  title={!currentUser ? t('shareProfile_loginToMessage') : t('trainerCard_messageTrainer')}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition-colors shadow-md shadow-emerald-500/20 disabled:bg-slate-600 disabled:cursor-not-allowed">
+                  <ChatBubbleIcon className="w-5 h-5" />
+                  <span>{t('trainerCard_messageTrainer')}</span>
+              </button>
+              <button 
+                  onClick={handleBookClick} 
+                  disabled={!currentUser}
+                  title={!currentUser ? t('shareProfile_loginToBook') : t('messages_bookSession')}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold bg-slate-700 text-white rounded-md hover:bg-slate-600 transition-colors disabled:bg-slate-600 disabled:cursor-not-allowed">
+                  <CalendarDaysIcon className="w-5 h-5" />
+                  <span>{t('messages_bookSession')}</span>
+              </button>
+              <button onClick={handleShare} title={t('shareProfile_button')} className="flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold bg-slate-700 text-white rounded-md hover:bg-slate-600 transition-colors">
+                  <ShareIcon className="w-5 h-5" />
+                  <span>{t('shareProfile_button')}</span>
+              </button>
+          </div>
         </div>
 
         {/* Content */}

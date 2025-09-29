@@ -49,10 +49,17 @@ const App: FC = () => {
   const { addToast } = useToast();
 
   useEffect(() => {
-    // Check for dev mode flag in URL
+    // Check for dev mode flag and shared trainer profile in URL
     const params = new URLSearchParams(window.location.search);
     if (params.get('dev') === 'true') {
         setIsDevMode(true);
+    }
+    const sharedTrainerId = params.get('trainerId');
+    if (sharedTrainerId) {
+        const trainer = MOCK_TRAINERS.find(t => t.id === parseInt(sharedTrainerId, 10));
+        if (trainer) {
+            setSelectedTrainerProfile(trainer);
+        }
     }
 
     // This is a one-time mock data setup for demonstration
@@ -520,6 +527,8 @@ const App: FC = () => {
             onClose={handleCloseProfileModal}
             currentUser={user}
             onReviewSubmit={handleAddReview}
+            onMessageTrainer={handleCreateOrSelectConversation}
+            onBookSession={handleInitiateBooking}
         />
       )}
       {confirmedBooking && bookedTrainerForConfirmation && (

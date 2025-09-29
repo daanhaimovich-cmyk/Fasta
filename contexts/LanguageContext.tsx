@@ -192,6 +192,10 @@ const enStrings: { [key: string]: string } = {
   "profileModal_submitReview": "Submit Review",
   "profileModal_noReviews": "Be the first to leave a review for {name}!",
 
+  "shareProfile_button": "Share Profile",
+  "shareProfile_loginToMessage": "Log in to message this trainer",
+  "shareProfile_loginToBook": "Log in to book a session",
+
   "dashboard_welcome": "Welcome, {name}!",
   "dashboard_progressTitle": "Your Progress",
   "dashboard_sessionsCompleted": "Total Sessions Completed",
